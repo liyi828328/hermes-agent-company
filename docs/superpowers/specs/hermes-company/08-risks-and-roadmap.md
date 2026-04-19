@@ -1,6 +1,6 @@
 # 风险、验收标准与路线图
 
-> 本文件是 [Hermes AI 软件公司设计总纲](../2026-04-19-hermes-company-design.md) 的子文档。
+> 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
 
 ## 第二阶段（接外单）扩展点
 

@@ -1,6 +1,6 @@
 # 项目档案制度
 
-> 本文件是 [Hermes AI 软件公司设计总纲](../2026-04-19-hermes-company-design.md) 的子文档。
+> 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
 
 
 每个项目一个 GitHub 私仓，`projects/<项目代号>/` 即为该仓库的本地 clone。

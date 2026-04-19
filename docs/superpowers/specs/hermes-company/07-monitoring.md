@@ -1,6 +1,6 @@
 # 监控机制（三层防御）
 
-> 本文件是 [Hermes AI 软件公司设计总纲](../2026-04-19-hermes-company-design.md) 的子文档。
+> 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
 
 
 设计目标：可以烧 token，绝不能让任何 agent 陷入死循环或失控而老板无感知。

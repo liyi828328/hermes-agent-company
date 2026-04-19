@@ -115,8 +115,8 @@ PM 推送演示链接 → 老板签字
 ```
 /Users/liyi/work/AI/Hermes/workspace/
 ├── docs/superpowers/specs/                    # 设计文档
-│   ├── 2026-04-19-hermes-company-design.md    # 本文件（总纲）
-│   └── 2026-04-19-hermes-company/             # 子文档目录
+│   ├── hermes-company-design.md    # 本文件（总纲）
+│   └── hermes-company/             # 子文档目录
 ├── projects/                                   # 每个项目 = 独立 GitHub 私仓 clone
 │   └── <项目代号>/                             # 档案(docs/) + 代码(src/) 混合
 ├── company/                                    # 公司级元数据（workspace repo 管理）
@@ -135,17 +135,17 @@ PM 推送演示链接 → 老板签字
 
 | # | 子文档 | 内容摘要 |
 |---|--------|---------|
-| 1 | [组织编制](2026-04-19-hermes-company/01-organization.md) | 七角色定义、PM/Dispatcher 分工边界与通信机制、Designer skill 化方案 |
-| 2 | [汇报关系](2026-04-19-hermes-company/02-reporting.md) | 4 个介入点、异常上报硬规则、每日简报、静默时段、回执超时、老板指令类型 |
-| 3 | [项目档案制度](2026-04-19-hermes-company/03-project-archive.md) | 档案结构、严格契约规则、GitHub 集成、PR 审核流水线（创建/调度/merge/契约变更分级/监控联动） |
-| 4 | [Agent Prompt 规范](2026-04-19-hermes-company/04-agent-prompts.md) | 7 个 agent 的 system prompt、预装 skill、工具白名单、行为规则、禁止行为 |
-| 5 | [看板与 Dashboard](2026-04-19-hermes-company/05-kanban-dashboard.md) | GitHub Projects v2 单项目看板 + VPS 聚合页跨项目总览 |
-| 6 | [运行时架构](2026-04-19-hermes-company/06-runtime-architecture.md) | PM 常驻、Dispatcher 常驻、干活 agent 按需 spawn、并行度、模型分配 |
-| 7 | [监控机制](2026-04-19-hermes-company/07-monitoring.md) | 三层防御：被动日志 → 异常通知 → 硬熔断，阈值定义与实现方式 |
-| 8 | [风险、验收标准与路线图](2026-04-19-hermes-company/08-risks-and-roadmap.md) | 第二阶段扩展点、已知风险缓解、验收标准、Phase 1 下一步 |
-| 9 | [测试策略](2026-04-19-hermes-company/09-testing-strategy.md) | 三层测试模型（单元/集成/E2E）、覆盖率 85% 门槛、merge 后集成测试自动 revert 机制 |
-| 10 | [迭代与版本管理](2026-04-19-hermes-company/10-iteration-versioning.md) | 变更分级（小改/中改/大改）、语义化版本、Tag 流程 |
-| 11 | [QA 能力边界](2026-04-19-hermes-company/11-qa-boundaries.md) | QA 能做的（API/Web/DB/逻辑）、做不了的（小程序/App/性能/安全）、兜底方案 |
+| 1 | [组织编制](hermes-company/01-organization.md) | 七角色定义、PM/Dispatcher 分工边界与通信机制、Designer skill 化方案 |
+| 2 | [汇报关系](hermes-company/02-reporting.md) | 4 个介入点、异常上报硬规则、每日简报、静默时段、回执超时、老板指令类型 |
+| 3 | [项目档案制度](hermes-company/03-project-archive.md) | 档案结构、严格契约规则、GitHub 集成、PR 审核流水线（创建/调度/merge/契约变更分级/监控联动） |
+| 4 | [Agent Prompt 规范](hermes-company/04-agent-prompts.md) | 7 个 agent 的 system prompt、预装 skill、工具白名单、行为规则、禁止行为 |
+| 5 | [看板与 Dashboard](hermes-company/05-kanban-dashboard.md) | GitHub Projects v2 单项目看板 + VPS 聚合页跨项目总览 |
+| 6 | [运行时架构](hermes-company/06-runtime-architecture.md) | PM 常驻、Dispatcher 常驻、干活 agent 按需 spawn、并行度、模型分配 |
+| 7 | [监控机制](hermes-company/07-monitoring.md) | 三层防御：被动日志 → 异常通知 → 硬熔断，阈值定义与实现方式 |
+| 8 | [风险、验收标准与路线图](hermes-company/08-risks-and-roadmap.md) | 第二阶段扩展点、已知风险缓解、验收标准、Phase 1 下一步 |
+| 9 | [测试策略](hermes-company/09-testing-strategy.md) | 三层测试模型（单元/集成/E2E）、覆盖率 85% 门槛、merge 后集成测试自动 revert 机制 |
+| 10 | [迭代与版本管理](hermes-company/10-iteration-versioning.md) | 变更分级（小改/中改/大改）、语义化版本、Tag 流程 |
+| 11 | [QA 能力边界](hermes-company/11-qa-boundaries.md) | QA 能做的（API/Web/DB/逻辑）、做不了的（小程序/App/性能/安全）、兜底方案 |
 
 ---
 

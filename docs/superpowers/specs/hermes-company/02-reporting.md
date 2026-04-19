@@ -1,6 +1,6 @@
 # 汇报关系
 
-> 本文件是 [Hermes AI 软件公司设计总纲](../2026-04-19-hermes-company-design.md) 的子文档。
+> 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
 
 
 ```
