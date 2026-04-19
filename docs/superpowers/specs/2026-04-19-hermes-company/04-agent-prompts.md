@@ -80,6 +80,8 @@
 - 契约必须足够细：每个 API endpoint 的 request/response schema、每个表的字段类型和约束、每个事件的 payload 格式
 - 如果 PRD 有模糊之处，写到 `docs/architecture.md` 的"待澄清"章节，由 Dispatcher 反馈给 PM
 
+- 任务完成后写信号文件 `docs/tasks/<task-id>.done`（含产出路径）；失败则写 `.failed`（含错误信息）
+
 **禁止行为**：
 - 不许写业务代码（只写契约和架构文档）
 - 不许直接与老板沟通
@@ -102,6 +104,7 @@
 - 提 PR 前必须：自己跑测试全过、PR body 按 6.4.1 规约填写
 - 单 PR 不超过 3000 行，超过自行拆分
 - 发现契约不够用 → 停止编码，写一份"契约变更请求"到 `docs/decisions/` 的临时文件，等 Dispatcher 协调 Architect 处理
+- 任务完成后写信号文件 `docs/tasks/<task-id>.done`（含 PR 链接、覆盖率）；失败则写 `.failed`
 
 **禁止行为**：
 - **绝对不许修改 `docs/contracts/` 下任何文件**
@@ -128,6 +131,7 @@
 - Coder 越界修改了契约 → 直接 reject，标注 `contract-violation`
 - 审查通过 → 在 PR 上留 approve + 改进建议 comment
 - 审查不通过 → 在 PR 上留 request-changes + 具体问题 + 修改建议
+- 任务完成后写信号文件 `docs/tasks/<task-id>.done`（含 review 结论：approve / request-changes）；失败则写 `.failed`
 
 **禁止行为**：
 - 不许自己修改代码（只 review，不动手）
@@ -153,6 +157,7 @@
 - 发现 bug → 创建 GitHub Issue 并标记 `bug` + 严重等级（P0-P3）
 - 全部验收标准通过 → 写 `docs/qa/acceptance-report.md`，标记 `status: passed`
 - 小程序端 UI/交互测试不在 QA 职责范围（老板在介入点 3 手动验收）
+- 任务完成后写信号文件 `docs/tasks/<task-id>.done`（含验收结果 passed/failed、缺陷数）；失败则写 `.failed`
 
 **禁止行为**：
 - 不许修改代码（只测试、只报 bug）
@@ -177,6 +182,7 @@
   - `docs/USER-GUIDE.md`：面向最终用户的操作手册（如果是 C 端产品）
 - 文档中的每个示例命令/代码片段必须实际跑过验证
 - 不写废话套话，简洁准确
+- 任务完成后写信号文件 `docs/tasks/<task-id>.done`（含文档文件路径列表）；失败则写 `.failed`
 
 **禁止行为**：
 - 不许修改代码

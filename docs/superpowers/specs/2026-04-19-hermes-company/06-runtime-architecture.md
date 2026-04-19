@@ -55,3 +55,55 @@ Dispatcher spawn 子 agent 时根据任务规模选择方式：
 - `hermes chat -q`：完全独立进程，无 turn 限制，产出通过档案文件传递
 - 多个 Coder 用 `hermes chat -q` 时加 `-w`（worktree 模式）避免 git 冲突
 - 边界情况拿不准时，偏向用 `hermes chat -q`（宁可多开进程也不要任务跑到一半撞 50 call 上限）
+
+## Agent 间协调机制
+
+七个 agent 之间**不直接对话**，全部通过文件 + 进程信号协调。
+
+### 协调链路总览
+
+```
+老板 ←→ PM：Telegram 消息
+PM → Dispatcher：docs/prd.md 中 status: approved
+Dispatcher → 子 agent：spawn 时 prompt 注入（项目代号、任务 ID、文件路径）
+Dispatcher ← 子 agent：子 agent 写文件到项目 repo（代码/PR/测试报告/文档）
+Dispatcher → PM：company/pm-state/alerts.jsonl（异常告警）
+Dispatcher → PM：docs/tasks/tasks.md + STATUS.md（进度数据）
+PM → 老板：读 alerts + STATUS.md → 推 Telegram
+```
+
+### 任务完成信号机制
+
+子 agent 完成任务后，Dispatcher 需要知道"干完了"并检查产出。按 spawn 方式分两套机制：
+
+**delegate_task 的任务（短任务）**：
+- 结果自动回到 Dispatcher session，天然知道完成
+- 不需要额外信号
+
+**hermes chat -q 的任务（长任务）**：
+- Dispatcher 用 `background=true` + `notify_on_complete=true` 启动子进程
+- 子进程退出时 Dispatcher 自动收到通知
+- Dispatcher 收到通知后检查信号文件：
+  - `docs/tasks/<task-id>.done` → 任务成功，读取产出（PR 链接 / 测试报告路径 / 文档路径）
+  - `docs/tasks/<task-id>.failed` → 任务失败，读取错误信息，决定重试或写 alert
+- 如果子进程退出但没有信号文件 → 视为异常，写 alert
+
+**信号文件格式**（JSON）：
+```json
+{
+  "task_id": "coder-42-fix-login",
+  "agent": "coder",
+  "status": "done",
+  "output": {
+    "pr_url": "https://github.com/xxx/pull/42",
+    "files_changed": 5,
+    "test_passed": true,
+    "coverage": "87%"
+  },
+  "token_usage": 125000,
+  "duration_seconds": 340,
+  "timestamp": "2026-04-20T14:30:00Z"
+}
+```
+
+**子 agent 的职责**：每个子 agent 在 prompt 中被要求，任务结束前必须写信号文件到 `docs/tasks/<task-id>.done` 或 `.failed`。这是强制行为规则，写进各 agent 的 prompt 模板中。
