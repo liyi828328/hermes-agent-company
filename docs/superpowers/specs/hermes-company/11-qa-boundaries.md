@@ -1,6 +1,8 @@
 # QA 能力边界
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：明确 QA Agent 的能力边界——能测什么（API/Web/DB）、不能测什么（小程序/App/性能/安全）、做不了的由谁兜底。
 
 ---
 

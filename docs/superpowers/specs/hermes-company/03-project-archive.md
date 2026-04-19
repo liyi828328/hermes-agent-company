@@ -1,6 +1,8 @@
 # 项目档案制度
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：定义项目仓库的档案结构、严格契约规则、GitHub 集成方式、PR 审核流水线（创建/调度/merge/契约变更分级/监控联动）。
 
 
 每个项目一个 GitHub 私仓，`projects/<项目代号>/` 即为该仓库的本地 clone。

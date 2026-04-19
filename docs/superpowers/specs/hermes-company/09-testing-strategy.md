@@ -1,6 +1,8 @@
 # 测试策略
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：定义三层测试模型（单元/集成/E2E）、覆盖率 85% 门槛、merge 后集成测试自动 revert 机制、bug 修复回归流程。
 
 ---
 

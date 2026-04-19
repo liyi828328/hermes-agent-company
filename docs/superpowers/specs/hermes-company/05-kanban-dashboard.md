@@ -1,6 +1,8 @@
 # 看板与 Dashboard
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：定义两层看板系统——GitHub Projects v2（单项目细节）和 VPS 聚合页（跨项目总览），让老板随时掌握全公司状态。
 
 
 GitHub Projects（单项目细节） + VPS 聚合页（跨项目总览）。

@@ -1,6 +1,8 @@
 # 运行时架构
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：定义运行时架构——PM 和 Dispatcher 常驻服务、子 agent 按需 spawn、并行度、模型分配、spawn 方式选择标准、agent 间协调与信号文件机制。
 
 
 ## PM Agent — 常驻

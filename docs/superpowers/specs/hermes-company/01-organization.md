@@ -1,6 +1,8 @@
 # 组织编制
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：定义公司七个 Agent 角色、PM 与 Dispatcher 的分工边界与通信机制、Designer 能力 skill 化方案。
 
 
 七角色 + Designer 能力 skill 化 + DevOps 老板自做。

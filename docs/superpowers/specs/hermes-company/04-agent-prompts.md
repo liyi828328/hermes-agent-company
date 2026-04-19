@@ -1,6 +1,8 @@
 # Agent Prompt 规范
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../hermes-company-design.md) 的子文档。
+>
+> **用途**：定义 7 个 Agent 的 system prompt 模板——角色定义、预装 skill、工具白名单、行为规则、禁止行为。Dispatcher spawn 子 agent 时读取对应模板。
 
 每个 agent spawn 时的 system prompt 由三部分组成：
 
