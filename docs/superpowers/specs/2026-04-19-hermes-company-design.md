@@ -142,6 +142,7 @@ PM 推送演示链接 → 老板签字
 | 6 | [运行时架构](2026-04-19-hermes-company/06-runtime-architecture.md) | PM 常驻、Dispatcher 常驻、干活 agent 按需 spawn、并行度、模型分配 |
 | 7 | [监控机制](2026-04-19-hermes-company/07-monitoring.md) | 三层防御：被动日志 → 异常通知 → 硬熔断，阈值定义与实现方式 |
 | 8 | [风险、验收标准与路线图](2026-04-19-hermes-company/08-risks-and-roadmap.md) | 第二阶段扩展点、已知风险缓解、验收标准、Phase 1 下一步 |
+| 9 | [测试策略](2026-04-19-hermes-company/09-testing-strategy.md) | 三层测试模型（单元/集成/E2E）、覆盖率 85% 门槛、merge 后集成测试自动 revert 机制 |
 
 ---
 
