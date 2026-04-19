@@ -3,33 +3,43 @@
 > 本文件是 [Hermes AI 软件公司设计总纲](../2026-04-19-hermes-company-design.md) 的子文档。
 
 
-每个项目一个 GitHub 私仓，本地工作副本位于 `~/work/AI/Hermes/workspace/projects/<项目代号>/`。
+每个项目一个 GitHub 私仓，`projects/<项目代号>/` 即为该仓库的本地 clone。
+
+> **注意**：`projects/` 下的每个项目是独立 git repo，不属于 workspace repo。workspace repo 只管 `docs/` 和 `company/` 等公司级文件。
 
 ## 档案结构
 
+每个项目仓库内部结构：
+
 ```
-projects/<项目代号>/
-├── 00-prd.md              # PM 维护：需求、验收标准、范围边界、设计规范
-├── 01-architecture.md     # Architect 维护：技术栈、模块划分、部署方案
-├── 02-contracts/          # Architect 维护：API spec、DB schema、消息格式
-│   ├── api.yaml           # OpenAPI 契约
-│   ├── schema.sql         # 数据库 schema
-│   └── events.md          # 异步事件定义
-├── 03-tasks/              # PM 维护：任务拆分 + 状态
-│   └── tasks.md           # 看板：todo / doing / review / done
-├── 04-decisions/          # 所有人追加：架构决策记录（ADR）
-│   └── ADR-001-xxx.md
-├── 05-reviews/            # Reviewer 输出：每次 review 的发现
-├── 06-qa/                 # QA 输出：测试用例 + 缺陷报告
-├── 07-docs/               # Doc Agent 维护：README、用户手册、API 文档
-├── code/                  # 实际代码（git 仓库子目录或单独仓库）
-└── STATUS.md              # PM 每工作周期更新：当前进度、阻塞、下一步
+<项目代号>/                    # = GitHub 私仓根目录
+├── docs/                      # 项目档案
+│   ├── prd.md                 # PM 维护：需求、验收标准、范围边界、设计规范
+│   ├── architecture.md        # Architect 维护：技术栈、模块划分、部署方案
+│   ├── contracts/             # Architect 维护：API spec、DB schema、消息格式
+│   │   ├── api.yaml           # OpenAPI 契约
+│   │   ├── schema.sql         # 数据库 schema
+│   │   └── events.md          # 异步事件定义
+│   ├── tasks/                 # PM 维护：任务拆分 + 状态
+│   │   └── tasks.md           # 看板：todo / doing / review / done
+│   ├── decisions/             # 所有人追加：架构决策记录（ADR）
+│   │   └── ADR-001-xxx.md
+│   ├── reviews/               # Reviewer 输出：每次 review 的发现
+│   └── qa/                    # QA 输出：测试用例 + 缺陷报告
+├── src/                       # 业务代码
+├── tests/                     # 测试代码
+│   ├── unit/                  # 单元测试（Coder 写）
+│   ├── integration/           # 集成测试（Coder 写）
+│   └── e2e/                   # E2E 测试（QA 写）
+├── README.md                  # Doc Agent 维护
+├── STATUS.md                  # PM 每工作周期更新：当前进度、阻塞、下一步
+└── .gitignore
 ```
 
 ## 严格契约规则
 
-- 任何 agent 开工第一件事：读 `00-prd.md` + `01-architecture.md` + `02-contracts/`
-- Coder 改代码必须先看 `02-contracts/`，发现契约不够用 → **不许擅自扩展**，必须通过 PM 找 Architect 改契约 → Architect 修改 → PM 通知所有相关 Coder
+- 任何 agent 开工第一件事：读 `docs/prd.md` + `docs/architecture.md` + `docs/contracts/`
+- Coder 改代码必须先看 `docs/contracts/`，发现契约不够用 → **不许擅自扩展**，必须通过 PM 找 Architect 改契约 → Architect 修改 → PM 通知所有相关 Coder
 - Coder 越界（修改了未声明的契约）→ Reviewer 直接 reject，不进 review
 - 所有跨 agent 决策走 ADR：一页纸，记录背景 / 候选方案 / 决定 / 影响，**追加不删除**
 - `STATUS.md` 是 PM 给老板看的窗口，每工作周期（或每个介入点前）更新
@@ -92,7 +102,7 @@ Dispatcher 按 FIFO 顺序处理 merge 队列：
 
 PR 默认在 PM 内部消化，老板**不会**收到 PR 级别通知。例外见下表。
 
-**契约变更（`02-contracts/` 下文件）按破坏性分三级**：
+**契约变更（`docs/contracts/` 下文件）按破坏性分三级**：
 
 | 级别 | 类型 | 示例 | 处理 |
 |------|------|------|------|

@@ -33,9 +33,9 @@
 | 维护 STATUS.md | ✅（摘要） | ✅（原始数据） |
 
 **PM ↔ Dispatcher 通信机制**（纯文件，不直接对话）：
-- PM 写 `00-prd.md` 标记 `status: approved` → Dispatcher 检测到后开始调度
+- PM 写 `docs/prd.md` 标记 `status: approved` → Dispatcher 检测到后开始调度
 - Dispatcher 写 `company/pm-state/alerts.jsonl` → PM 轮询读到后推 Telegram
-- Dispatcher 更新 `03-tasks/tasks.md` → PM 从中生成 STATUS.md 摘要
+- Dispatcher 更新 `docs/tasks/tasks.md` → PM 从中生成 STATUS.md 摘要
 
 **Designer 不设 agent**，能力拆为两层：
 - 决策层：PM Agent 在 PRD 阶段调用 `popular-web-designs` skill，从 54 套真实产品设计系统挑一套作为基调，把配色 token、字体、圆角、间距规范写进 PRD 的"设计规范"章节。

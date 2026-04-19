@@ -117,15 +117,16 @@ PM 推送演示链接 → 老板签字
 ├── docs/superpowers/specs/                    # 设计文档
 │   ├── 2026-04-19-hermes-company-design.md    # 本文件（总纲）
 │   └── 2026-04-19-hermes-company/             # 子文档目录
-├── projects/                                   # 每个项目的档案 + 代码副本
-│   └── <项目代号>/
-├── company/                                    # 公司级元数据
+├── projects/                                   # 每个项目 = 独立 GitHub 私仓 clone
+│   └── <项目代号>/                             # 档案(docs/) + 代码(src/) 混合
+├── company/                                    # 公司级元数据（workspace repo 管理）
 │   ├── logs/                                   # agent 调用日志、熔断日志
 │   ├── dashboard/                              # 聚合页生成器
 │   ├── pm-state/                               # PM/Dispatcher 持久化状态
 │   ├── monitor/                                # 监控循环脚本和配置
 │   └── prompts/                                # agent prompt 模板
-└── .git/
+├── .gitignore                                  # 含 projects/（独立 repo 不归 workspace 管）
+└── .git/                                       # workspace repo（管 docs/ + company/）
 ```
 
 ---

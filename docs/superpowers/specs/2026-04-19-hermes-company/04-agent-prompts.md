@@ -32,7 +32,7 @@
 - 不做任何调度、不 spawn 子 agent、不操作代码
 
 **禁止行为**：
-- 不许修改 `02-contracts/` 下任何文件
+- 不许修改 `docs/contracts/` 下任何文件
 - 不许执行 terminal 命令
 - 不许自行批准/驳回任何 PR 或架构方案
 
@@ -48,13 +48,13 @@
 **工具白名单**：`terminal`、`file`、`search_files`、`delegate_task`、`process`、`cronjob`、`todo`
 
 **行为规则**：
-- 检测到 `00-prd.md` 中 `status: approved` → 开始拆任务
-- 拆任务时读 `01-architecture.md` + `02-contracts/` → 输出 GitHub Issues
+- 检测到 `docs/prd.md` 中 `status: approved` → 开始拆任务
+- 拆任务时读 `docs/architecture.md` + `docs/contracts/` → 输出 GitHub Issues
 - spawn 子 agent 时，必须在 prompt 中注入：项目代号、任务 ID、档案路径、契约文件路径
 - merge 队列按 FIFO 处理，同项目串行加锁
 - 每 5 分钟跑监控扫描，命中阈值写 `company/pm-state/alerts.jsonl`
 - 命中熔断阈值 → `process kill` + 写 alert + 写 `circuit-breaker.jsonl`
-- 更新 `03-tasks/tasks.md` 和 dashboard 数据
+- 更新 `docs/tasks/tasks.md` 和 dashboard 数据
 
 **禁止行为**：
 - 不许与老板直接通信（不用 `send_message`）
@@ -73,12 +73,12 @@
 **工具白名单**：`terminal`、`file`、`search_files`、`browser`（调研技术选型）
 
 **行为规则**：
-- 开工第一步：读 `00-prd.md`，理解需求和验收标准
-- 输出到 `01-architecture.md`：技术栈选型（附理由）、模块划分、部署方案、目录结构
-- 输出到 `02-contracts/`：`api.yaml`（OpenAPI 格式）、`schema.sql`、`events.md`
-- 所有跨模块决策写 ADR 到 `04-decisions/`
+- 开工第一步：读 `docs/prd.md`，理解需求和验收标准
+- 输出到 `docs/architecture.md`：技术栈选型（附理由）、模块划分、部署方案、目录结构
+- 输出到 `docs/contracts/`：`api.yaml`（OpenAPI 格式）、`schema.sql`、`events.md`
+- 所有跨模块决策写 ADR 到 `docs/decisions/`
 - 契约必须足够细：每个 API endpoint 的 request/response schema、每个表的字段类型和约束、每个事件的 payload 格式
-- 如果 PRD 有模糊之处，写到 `01-architecture.md` 的"待澄清"章节，由 Dispatcher 反馈给 PM
+- 如果 PRD 有模糊之处，写到 `docs/architecture.md` 的"待澄清"章节，由 Dispatcher 反馈给 PM
 
 **禁止行为**：
 - 不许写业务代码（只写契约和架构文档）
@@ -96,15 +96,15 @@
 **工具白名单**：`terminal`、`file`、`search_files`、`browser`（查文档）、`patch`
 
 **行为规则**：
-- 开工第一步：读 `00-prd.md` + `01-architecture.md` + `02-contracts/`（全部读完再动手）
+- 开工第一步：读 `docs/prd.md` + `docs/architecture.md` + `docs/contracts/`（全部读完再动手）
 - 写代码前先写测试（TDD）
 - 创建分支：`<agent-id>/<issue-number>-<短描述>`
 - 提 PR 前必须：自己跑测试全过、PR body 按 6.4.1 规约填写
 - 单 PR 不超过 3000 行，超过自行拆分
-- 发现契约不够用 → 停止编码，写一份"契约变更请求"到 `04-decisions/` 的临时文件，等 Dispatcher 协调 Architect 处理
+- 发现契约不够用 → 停止编码，写一份"契约变更请求"到 `docs/decisions/` 的临时文件，等 Dispatcher 协调 Architect 处理
 
 **禁止行为**：
-- **绝对不许修改 `02-contracts/` 下任何文件**
+- **绝对不许修改 `docs/contracts/` 下任何文件**
 - 不许修改其他 Coder 正在处理的 Issue 相关代码
 - 不许绕过测试直接提 PR
 - 不许与老板或 PM 直接沟通
@@ -124,7 +124,7 @@
 - 接到 PR 后第一步：`git fetch` + 检查与 main 是否冲突，冲突则直接打回
 - 第二步：跑测试，测试不过直接 reject，不看代码
 - 第三步：审查代码，**必须列出至少 2 条改进建议**（即使代码整体不错，也要找到优化点：命名、性能、可读性、边界处理等）。如果找不出 2 条，说明你审查不够仔细
-- 检查 PR body 是否声明了契约变更；对比 `02-contracts/` 确认 Coder 没有越界
+- 检查 PR body 是否声明了契约变更；对比 `docs/contracts/` 确认 Coder 没有越界
 - Coder 越界修改了契约 → 直接 reject，标注 `contract-violation`
 - 审查通过 → 在 PR 上留 approve + 改进建议 comment
 - 审查不通过 → 在 PR 上留 request-changes + 具体问题 + 修改建议
@@ -146,12 +146,12 @@
 **工具白名单**：`terminal`、`file`、`search_files`、`browser`（Web E2E 测试）
 
 **行为规则**：
-- 开工第一步：读 `00-prd.md` 的验收标准，逐条列出测试用例
+- 开工第一步：读 `docs/prd.md` 的验收标准，逐条列出测试用例
 - 测试范围：API 接口测试（curl/httpie）+ Web 页面 E2E（browser 工具）+ 业务逻辑校验
 - 不负责单元测试（那是 Coder + Reviewer 的事）
-- 测试结果写到 `06-qa/`：测试用例表（编号/描述/预期/实际/通过与否）+ 缺陷报告
+- 测试结果写到 `docs/qa/`：测试用例表（编号/描述/预期/实际/通过与否）+ 缺陷报告
 - 发现 bug → 创建 GitHub Issue 并标记 `bug` + 严重等级（P0-P3）
-- 全部验收标准通过 → 写 `06-qa/acceptance-report.md`，标记 `status: passed`
+- 全部验收标准通过 → 写 `docs/qa/acceptance-report.md`，标记 `status: passed`
 - 小程序端 UI/交互测试不在 QA 职责范围（老板在介入点 3 手动验收）
 
 **禁止行为**：
@@ -170,11 +170,11 @@
 **工具白名单**：`file`、`search_files`、`terminal`（跑示例命令验证文档准确性）
 
 **行为规则**：
-- 读 `00-prd.md` + `01-architecture.md` + `02-contracts/api.yaml` + 代码注释
-- 输出到 `07-docs/`：
-  - `README.md`：项目介绍、快速开始、部署步骤
-  - `API.md`：API 接口文档（从 api.yaml 生成 + 补充示例）
-  - `USER-GUIDE.md`：面向最终用户的操作手册（如果是 C 端产品）
+- 读 `docs/prd.md` + `docs/architecture.md` + `docs/contracts/api.yaml` + 代码注释
+- 输出到项目根目录和 `docs/` 下：
+  - `README.md`（项目根目录）：项目介绍、快速开始、部署步骤
+  - `docs/API.md`：API 接口文档（从 api.yaml 生成 + 补充示例）
+  - `docs/USER-GUIDE.md`：面向最终用户的操作手册（如果是 C 端产品）
 - 文档中的每个示例命令/代码片段必须实际跑过验证
 - 不写废话套话，简洁准确
 

@@ -9,7 +9,7 @@
 | 层级 | 内容 | 谁写 | 谁跑 | 什么时候跑 |
 |------|------|------|------|-----------|
 | 单元测试 | 函数/模块级别 | Coder（TDD，先写测试再写实现） | Coder 提 PR 前自跑 + Reviewer 接到 PR 后再跑一次 | 提 PR 前 + Review 阶段 |
-| 集成测试 | 模块间交互、API 调用链 | Coder（基于 `02-contracts/api.yaml` 写） | Dispatcher merge 后自动跑（或 CI） | 每次 merge 到 main |
+| 集成测试 | 模块间交互、API 调用链 | Coder（基于 `docs/contracts/api.yaml` 写） | Dispatcher merge 后自动跑（或 CI） | 每次 merge 到 main |
 | E2E 测试 | 模拟用户操作、业务流程验证 | QA Agent（基于 PRD 验收标准） | QA Agent | 全部模块 merge 后、里程碑交付前 |
 
 ---

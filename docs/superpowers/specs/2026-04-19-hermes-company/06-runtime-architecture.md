@@ -17,7 +17,7 @@
 - 启动方式：作为 systemd / launchd 服务常驻，后台运行
 - 不对人说话，纯自动化引擎
 - 职责：读 PRD → 拆任务 → spawn 子 agent → 管 merge 队列 → 跑监控循环 → 更新看板/dashboard → 异常写 alert
-- 与 PM 通过档案文件通信（`company/pm-state/alerts.jsonl`、`03-tasks/tasks.md`、`STATUS.md`）
+- 与 PM 通过档案文件通信（`company/pm-state/alerts.jsonl`、`docs/tasks/tasks.md`、`STATUS.md`）
 - 故障隔离：Dispatcher 挂了不影响老板与 PM 通信；PM 挂了 Dispatcher 继续调度
 
 ## 干活 Agent — 按需 spawn

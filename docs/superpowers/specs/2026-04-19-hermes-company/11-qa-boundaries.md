@@ -12,7 +12,7 @@
 | Web 页面 E2E | 模拟用户操作浏览器 | Hermes `browser` 工具 |
 | 数据库状态验证 | 跑 SQL 检查数据一致性 | `terminal`（mysql/psql/sqlite3） |
 | 业务逻辑审查 | 读代码检查逻辑是否符合 PRD | `file` / `search_files` |
-| 测试报告生成 | 测试用例表 + 缺陷报告 + 验收报告 | 写到 `06-qa/` |
+| 测试报告生成 | 测试用例表 + 缺陷报告 + 验收报告 | 写到 `docs/qa/` |
 
 ---
 
