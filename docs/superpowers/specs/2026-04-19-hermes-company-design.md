@@ -137,7 +137,7 @@ PM 推送演示链接 → 老板签字
 | 1 | [组织编制](2026-04-19-hermes-company/01-organization.md) | 七角色定义、PM/Dispatcher 分工边界与通信机制、Designer skill 化方案 |
 | 2 | [汇报关系](2026-04-19-hermes-company/02-reporting.md) | 4 个介入点、异常上报硬规则、每日简报、静默时段、回执超时、老板指令类型 |
 | 3 | [项目档案制度](2026-04-19-hermes-company/03-project-archive.md) | 档案结构、严格契约规则、GitHub 集成、PR 审核流水线（创建/调度/merge/契约变更分级/监控联动） |
-| 4 | [Agent Prompt 规范](2026-04-19-hermes-company/04-agent-prompts.md) | 7 个 agent 的 system prompt、预装 skill、工具白名单、行为规则、禁止行为（待补充） |
+| 4 | [Agent Prompt 规范](2026-04-19-hermes-company/04-agent-prompts.md) | 7 个 agent 的 system prompt、预装 skill、工具白名单、行为规则、禁止行为 |
 | 5 | [看板与 Dashboard](2026-04-19-hermes-company/05-kanban-dashboard.md) | GitHub Projects v2 单项目看板 + VPS 聚合页跨项目总览 |
 | 6 | [运行时架构](2026-04-19-hermes-company/06-runtime-architecture.md) | PM 常驻、Dispatcher 常驻、干活 agent 按需 spawn、并行度、模型分配 |
 | 7 | [监控机制](2026-04-19-hermes-company/07-monitoring.md) | 三层防御：被动日志 → 异常通知 → 硬熔断，阈值定义与实现方式 |

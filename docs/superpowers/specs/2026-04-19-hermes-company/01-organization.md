@@ -2,7 +2,6 @@
 
 > 本文件是 [Hermes AI 软件公司设计总纲](../2026-04-19-hermes-company-design.md) 的子文档。
 
-## 4. 组织编制
 
 七角色 + Designer 能力 skill 化 + DevOps 老板自做。
 
