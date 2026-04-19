@@ -51,6 +51,7 @@
 - Coder 提交 = Pull Request
 - Reviewer 通过 PR review 留 comment
 - PM 通过 `gh` CLI 操作 issue / PR / project board
+- **git commit message 一律使用中文描述**
 
 ## PR 审核流水线
 
