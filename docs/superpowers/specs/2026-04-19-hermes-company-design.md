@@ -143,6 +143,8 @@ PM 推送演示链接 → 老板签字
 | 7 | [监控机制](2026-04-19-hermes-company/07-monitoring.md) | 三层防御：被动日志 → 异常通知 → 硬熔断，阈值定义与实现方式 |
 | 8 | [风险、验收标准与路线图](2026-04-19-hermes-company/08-risks-and-roadmap.md) | 第二阶段扩展点、已知风险缓解、验收标准、Phase 1 下一步 |
 | 9 | [测试策略](2026-04-19-hermes-company/09-testing-strategy.md) | 三层测试模型（单元/集成/E2E）、覆盖率 85% 门槛、merge 后集成测试自动 revert 机制 |
+| 10 | [迭代与版本管理](2026-04-19-hermes-company/10-iteration-versioning.md) | 变更分级（小改/中改/大改）、语义化版本、Tag 流程 |
+| 11 | [QA 能力边界](2026-04-19-hermes-company/11-qa-boundaries.md) | QA 能做的（API/Web/DB/逻辑）、做不了的（小程序/App/性能/安全）、兜底方案 |
 
 ---
 

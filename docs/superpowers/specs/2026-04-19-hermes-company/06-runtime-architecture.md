@@ -41,3 +41,18 @@
 - 缓解措施：每次调用记录 token 用量到 STATUS.md 和 dashboard，便于老板观察后续优化
 
 ---
+
+### Spawn 方式选择标准
+
+Dispatcher spawn 子 agent 时根据任务规模选择方式：
+
+| 方式 | 适用场景 | 典型角色 |
+|------|---------|---------|
+| `delegate_task` | 短任务，预估 < 40 tool calls | Reviewer（审 PR）、Doc（写文档）、Architect（出方案） |
+| `hermes chat -q` | 长任务，预估 ≥ 40 tool calls | Coder（写模块）、QA（E2E 测试） |
+
+关键区别：
+- `delegate_task`：50 tool calls 上限，不能再 delegate，结果直接回到 Dispatcher session
+- `hermes chat -q`：完全独立进程，无 turn 限制，产出通过档案文件传递
+- 多个 Coder 用 `hermes chat -q` 时加 `-w`（worktree 模式）避免 git 冲突
+- 边界情况拿不准时，偏向用 `hermes chat -q`（宁可多开进程也不要任务跑到一半撞 50 call 上限）
