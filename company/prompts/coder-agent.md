@@ -28,6 +28,7 @@
 ## Git 提交规则
 
 - commit message 一律使用中文描述
+- push 命令：`GIT_SSH_COMMAND="ssh -i ~/.ssh/github -o StrictHostKeyChecking=no -p 443" git push origin main`
 
 ## 禁止行为
 

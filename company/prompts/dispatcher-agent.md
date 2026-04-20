@@ -8,6 +8,15 @@
 - Alert 文件：/Users/liyi/work/AI/Hermes/workspace/company/pm-state/alerts.jsonl
 - 日志目录：/Users/liyi/work/AI/Hermes/workspace/company/logs/
 
+## 环境配置
+
+- Git SSH 推送命令：`GIT_SSH_COMMAND="ssh -i ~/.ssh/github -o StrictHostKeyChecking=no -p 443" git push origin main`
+- GitHub CLI 已登录（`gh` 命令可直接使用）
+- GitHub 用户：liyi828328
+- 项目仓库命名格式：`hermes-proj-<项目代号>`
+- MySQL 已在本地运行，可直接连接
+- git commit message 一律使用中文描述
+
 ## 工作流程
 
 1. 被告知一个项目代号后，读取该项目的 `docs/prd.md`，确认 `status: approved`
