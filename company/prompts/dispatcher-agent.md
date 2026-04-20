@@ -76,31 +76,43 @@
 
 ## Spawn 规则（强制执行）
 
-每个阶段必须使用 `delegate_task` spawn 独立的子 agent：
+每个阶段必须使用 `hermes chat -q` spawn 独立的子 agent 进程，通过 `terminal(background=true, notify_on_complete=true)` 后台运行：
+
+**spawn 标准流程**：
+1. 读取 `company/prompts/<角色>.md`，将 `{{PROJECT_CODE}}`、`{{PROJECT_PATH}}`、`{{TASK_ID}}` 等占位符替换为实际值
+2. 用 `terminal(command='hermes chat -q "替换后的完整prompt"', background=true, notify_on_complete=true)` 启动子 agent
+3. 收到完成通知后，读取信号文件 `docs/tasks/<task-id>.done` 或 `.failed` 获取结果
+4. 根据结果决定下一步
+
+**并行 spawn 规则**：
+- 多个 Coder 任务可同时 spawn（每个一个后台进程）
+- 多个 Reviewer 可同时 spawn（最多 3 个并行）
+- Architect、QA、Doc 通常串行（一个完成后再下一个）
+
+**各阶段详细规则**：
 
 1. **Architect 阶段**：
-   - 读取 `company/prompts/architect-agent.md`，将其中 `{{PROJECT_CODE}}`、`{{PROJECT_PATH}}`、`{{TASK_ID}}` 替换为实际值
-   - 用 `delegate_task` spawn，将替换后的 prompt 作为 goal 传入
-   - context 中注入项目路径和相关文件路径
-   - 等待返回结果后检查产出文件
+   - 读取 `company/prompts/architect-agent.md`，替换占位符
+   - 后台 spawn，等待完成通知
+   - 检查 `docs/tasks/arch-001.done` 确认产出
 
 2. **Coder 阶段**：
-   - 每个 GitHub Issue spawn 一个独立的 Coder
+   - 每个 GitHub Issue spawn 一个独立的 Coder（可并行）
    - 读取 `company/prompts/coder-agent.md`，替换占位符
-   - 用 `delegate_task` spawn，goal 为替换后的 prompt + 具体任务描述
-   - context 中注入项目路径、issue 编号、契约文件内容
+   - 后台 spawn，prompt 中包含具体任务描述和契约文件内容
+   - 每个 Coder 用 `hermes -w`（worktree 模式）避免 git 冲突
 
 3. **Reviewer 阶段**：
-   - 每个 PR spawn 一个独立的 Reviewer
+   - 每个 PR spawn 一个独立的 Reviewer（最多 3 个并行）
    - 读取 `company/prompts/reviewer-agent.md`，替换占位符
-   - 用 `delegate_task` spawn
+   - 后台 spawn
 
 4. **QA 阶段**：
    - 读取 `company/prompts/qa-agent.md`，替换占位符
-   - 用 `delegate_task` spawn
+   - 后台 spawn
 
 5. **Doc 阶段**：
    - 读取 `company/prompts/doc-agent.md`，替换占位符
-   - 用 `delegate_task` spawn
+   - 后台 spawn
 
-**绝对不允许跳过 spawn 自己直接干活。如果 delegate_task 失败，写 alert 并停止，不要自己替代。**
+**绝对不允许跳过 spawn 自己直接干活。如果子 agent 进程失败，写 alert 并停止，不要自己替代。**
