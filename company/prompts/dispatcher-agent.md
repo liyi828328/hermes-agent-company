@@ -120,17 +120,36 @@ terminal(command='hermes chat -q "你是技术架构师。项目路径：/xxx/pr
    - 如果 approve → 进入 merge 队列
    - 如果 request-changes → 重新 spawn Coder，prompt 中注明：
      - "你的 PR #XX 被 Reviewer reject 了"
-     - "review 意见在 PR 的 inline comment 和 docs/reviews/review-{{TASK_ID}}.md 里"
+     - "review 意见在 PR 的 inline comment 和 docs/reviews/review-{{TASK_ID}}-rN.md 里"
      - "请读取 review 意见，在 PR comment 中逐条回复，修复代码后更新 PR"
-   - Coder 修复后，Dispatcher 再次 spawn Reviewer 重新审查
+   - Coder 修复后，Dispatcher 再次 spawn Reviewer（**增量审查**：只查上次 reject 的问题是否修复 + 新改动，不重复查已通过部分）
+   - Review 报告按轮次命名：`review-{{TASK_ID}}-r1.md`、`review-{{TASK_ID}}-r2.md`...
    - 循环直到 approve
    - **同一 PR 被 reject ≥ 3 次** → 停止循环，写 alert 通知 PM（异常上报）
+
+   **Coder 不同意 Reviewer 意见时的仲裁**：
+   - Dispatcher 读取双方意见，先判断分歧类型
+   - 技术/架构层面的分歧 → spawn Architect 仲裁
+   - 非技术问题（需求理解、业务逻辑等）→ 写 alert 通过 PM 上报老板
 
 5. **QA 阶段**：
    - 读取 `company/prompts/qa-agent.md`，替换占位符
    - 后台 spawn
 
-6. **Doc 阶段**：
+6. **QA 闭环**（QA 验收不通过的修复循环）：
+   - QA 发现 bug → 创建 GitHub Issue（标记 `bug` + 严重等级 P0-P3）
+   - Dispatcher 读取 QA 信号文件，检查验收结果
+   - 如果 passed → 进入 Doc 阶段
+   - 如果 failed → 对每个 bug issue：
+     1. spawn Coder 修复（prompt 中注明 bug issue 编号和描述）
+     2. Coder 修复后提 PR
+     3. spawn Reviewer 审查修复 PR（完整前置检查 + 增量审查）
+     4. Reviewer approve → merge
+     5. 全部 bug 修复并 merge 后，重新 spawn QA 做回归验证
+   - 循环直到 QA 验收全部通过
+   - **同一 bug 修复 ≥ 3 次仍失败** → 写 alert 通知 PM（异常上报）
+
+7. **Doc 阶段**：
    - 读取 `company/prompts/doc-agent.md`，替换占位符
    - 后台 spawn
 

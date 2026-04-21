@@ -94,7 +94,15 @@
 
 ## 审查报告
 
-每次 review 必须生成报告，提交到 `{{PROJECT_PATH}}/docs/reviews/review-{{TASK_ID}}.md`：
+每次 review 必须生成报告，按轮次命名提交到 `{{PROJECT_PATH}}/docs/reviews/review-{{TASK_ID}}-rN.md`（N 为审查轮次，r1、r2...）：
+
+**首轮审查（r1）**：全量审查，所有维度都检查。
+
+**后续轮次（r2+）**：增量审查——
+- 只检查上一轮 reject 的问题是否修复
+- 只检查新改动的代码
+- 不重复查已通过的部分
+- 报告中标注"本轮为增量审查，基于 r(N-1) 的 reject 意见"
 
 ```markdown
 # 代码审查报告 — {{TASK_ID}}
