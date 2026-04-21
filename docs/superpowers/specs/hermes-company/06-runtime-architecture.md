@@ -109,3 +109,37 @@ PM → 老板：读 alerts + STATUS.md → 推 Telegram
 ```
 
 **子 agent 的职责**：每个子 agent 在 prompt 中被要求，任务结束前必须写信号文件到 `docs/tasks/<task-id>.done` 或 `.failed`。这是强制行为规则，写进各 agent 的 prompt 模板中。
+
+## Review 闭环
+
+Dispatcher 主导 Coder 和 Reviewer 之间的修复循环：
+
+```
+Coder 提 PR → Dispatcher spawn Reviewer（全量审查 r1）
+  → approve → 进 merge 队列
+  → reject → Dispatcher spawn Coder（读 PR comment + review 报告，逐条回复并修复）
+      → Dispatcher spawn Reviewer（增量审查 r2，只查修复项 + 新改动）
+      → 循环直到 approve
+      → ≥ 3 次 reject → 异常上报
+```
+
+Review 报告按轮次命名：`docs/reviews/review-<task-id>-r1.md`、`r2.md`...
+
+**分歧仲裁**：Coder 不同意 Reviewer 意见时，Dispatcher 判断分歧类型——技术问题 spawn Architect 仲裁（输出 ADR），非技术问题通过 PM 上报老板。
+
+## QA 闭环
+
+Dispatcher 主导 QA 验收不通过后的修复循环：
+
+```
+Dispatcher spawn QA → 验收
+  → passed → 进 Doc 阶段
+  → failed → QA 创建 bug issue（P0-P3）
+      → Dispatcher 逐个 spawn Coder 修复
+      → 每个修复走 Review 闭环（Coder → Reviewer → merge）
+      → 全部修复后 spawn QA 回归验证（修复的 bug + 相关模块）
+      → 循环直到 passed
+      → 同一 bug ≥ 3 次修复失败 → 异常上报
+```
+
+验收阻塞规则：P0/P1 未修复 → 不通过。P2/P3 可带着交付但必须记录。

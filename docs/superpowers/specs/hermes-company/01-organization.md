@@ -11,11 +11,11 @@
 |------|------|------|
 | PM Agent | 对老板唯一窗口：接需求、写 PRD、汇报、简报、回答查询、维护 STATUS.md 摘要 | claude-opus-4.6-1m |
 | Dispatcher Agent | 内部调度引擎：拆任务、spawn 子 agent、管 merge 队列、跑监控循环、更新看板/dashboard、异常写 alert | claude-opus-4.6-1m |
-| Architect Agent | 技术方案、DB schema、API 契约、目录结构、ADR | claude-opus-4.6-1m |
-| Coder Agent（可多实例并行）| 按模块实现代码，严格遵守契约 | claude-opus-4.6-1m |
-| Reviewer Agent | 代码审查、跑测试、提 issue（不是橡皮图章） | claude-opus-4.6-1m |
-| QA Agent | 端到端验收、模拟用户操作、缺陷报告 | claude-opus-4.6-1m |
-| Doc Agent | README、API 文档、用户手册 | claude-opus-4.6-1m |
+| Architect Agent | 技术方案、DB schema、API 契约、目录结构、ADR、技术分歧仲裁 | claude-opus-4.6-1m |
+| Coder Agent（可多实例并行）| 按模块实现代码，TDD，严格遵守契约，被 reject 后修复并回复 comment | claude-opus-4.6-1m |
+| Reviewer Agent | 六维深度审查（安全/性能/规范/重复/依赖/契约）、PR inline comment、轮次报告 | claude-opus-4.6-1m |
+| QA Agent | 端到端验收、契约合规验证、缺陷报告（P0-P3）、回归测试 | claude-opus-4.6-1m |
+| Doc Agent | README、API 文档、部署文档、数据库文档、CHANGELOG，按需生成 | claude-opus-4.6-1m |
 
 **PM 与 Dispatcher 的分工边界**：
 
@@ -28,6 +28,9 @@
 | 拆任务为 GitHub Issues | | ✅ |
 | spawn 子 agent（Architect/Coder/Reviewer/QA/Doc） | | ✅ |
 | 管 PR merge 队列（锁/rebase/merge/通知） | | ✅ |
+| 管 Review 闭环（reject → 修复 → 增量审查） | | ✅ |
+| 管 QA 闭环（bug → 修复 → 回归验证） | | ✅ |
+| 技术分歧仲裁协调 | | ✅ |
 | 跑监控循环（5 分钟扫描） | | ✅ |
 | 更新看板/dashboard 数据 | | ✅ |
 | 发现异常写 alert 文件 | | ✅ |

@@ -19,9 +19,17 @@
 ## 覆盖率要求
 
 - **单元测试覆盖率不得低于 85%**
-- Coder 提 PR 时必须在 PR body 中附上覆盖率报告（如 `pytest --cov` 或对应工具输出）
+- Coder 提 PR 时必须生成标准 Markdown 格式的覆盖率报告，提交到 `docs/reports/coverage-<task-id>.md`
+- 报告内容：总覆盖率、行覆盖率、分支覆盖率、各模块覆盖率、未覆盖的关键方法列表
 - 覆盖率低于 85% → Reviewer 直接 reject，不看代码
 - 集成测试和 E2E 测试暂不设覆盖率门槛，靠 Reviewer 和 QA 人肉判断关键路径是否覆盖
+
+## 静态代码检查
+
+- Coder 提 PR 前必须通过对应语言的静态检查工具
+- Java: Checkstyle / Python: ruff / JavaScript: ESLint / PHP: PHPStan / Go: golangci-lint
+- 静态检查有错误 → 不能提 PR
+- Reviewer 前置检查时确认静态检查结果
 
 ---
 

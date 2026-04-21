@@ -17,23 +17,37 @@
 <项目代号>/                    # = GitHub 私仓根目录
 ├── docs/                      # 项目档案
 │   ├── prd.md                 # PM 维护：需求、验收标准、范围边界、设计规范
-│   ├── architecture.md        # Architect 维护：技术栈、模块划分、部署方案
+│   ├── architecture.md        # Architect 维护：技术栈、模块划分、部署方案、目录结构
 │   ├── contracts/             # Architect 维护：API spec、DB schema、消息格式
 │   │   ├── api.yaml           # OpenAPI 契约
-│   │   ├── schema.sql         # 数据库 schema
+│   │   ├── schema.sql         # 数据库 schema（含索引）
+│   │   ├── error-codes.md     # 统一错误码规范
 │   │   └── events.md          # 异步事件定义
-│   ├── tasks/                 # PM 维护：任务拆分 + 状态
-│   │   └── tasks.md           # 看板：todo / doing / review / done
+│   ├── tasks/                 # 任务看板 + 信号文件
+│   │   ├── tasks.md           # 看板：todo / doing / review / done
+│   │   ├── <task-id>.done     # 子 agent 完成信号
+│   │   └── <task-id>.failed   # 子 agent 失败信号
 │   ├── decisions/             # 所有人追加：架构决策记录（ADR）
 │   │   └── ADR-001-xxx.md
-│   ├── reviews/               # Reviewer 输出：每次 review 的发现
-│   └── qa/                    # QA 输出：测试用例 + 缺陷报告
+│   ├── reviews/               # Reviewer 输出：审查报告（按轮次）
+│   │   └── review-<task-id>-r1.md
+│   ├── reports/               # 覆盖率报告
+│   │   └── coverage-<task-id>.md
+│   ├── qa/                    # QA 输出：测试用例 + 缺陷报告 + 验收报告
+│   │   ├── test-cases-<task-id>.md
+│   │   ├── defects-<task-id>.md
+│   │   └── acceptance-report-<task-id>.md
+│   ├── API.md                 # Doc Agent 维护
+│   ├── DEPLOY.md              # Doc Agent 维护
+│   ├── DATABASE.md            # Doc Agent 维护（如有数据库）
+│   └── USER-GUIDE.md          # Doc Agent 维护（如有用户界面）
 ├── src/                       # 业务代码
 ├── tests/                     # 测试代码
 │   ├── unit/                  # 单元测试（Coder 写）
 │   ├── integration/           # 集成测试（Coder 写）
 │   └── e2e/                   # E2E 测试（QA 写）
 ├── README.md                  # Doc Agent 维护
+├── CHANGELOG.md               # Doc Agent 维护
 ├── STATUS.md                  # PM 每工作周期更新：当前进度、阻塞、下一步
 └── .gitignore
 ```
