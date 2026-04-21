@@ -115,11 +115,22 @@ terminal(command='hermes chat -q "你是技术架构师。项目路径：/xxx/pr
    - 读取 `company/prompts/reviewer-agent.md`，替换占位符
    - 后台 spawn
 
-4. **QA 阶段**：
+4. **Review 闭环**（Reviewer reject 后的修复循环）：
+   - Dispatcher 读取 Reviewer 信号文件，检查结论
+   - 如果 approve → 进入 merge 队列
+   - 如果 request-changes → 重新 spawn Coder，prompt 中注明：
+     - "你的 PR #XX 被 Reviewer reject 了"
+     - "review 意见在 PR 的 inline comment 和 docs/reviews/review-{{TASK_ID}}.md 里"
+     - "请读取 review 意见，在 PR comment 中逐条回复，修复代码后更新 PR"
+   - Coder 修复后，Dispatcher 再次 spawn Reviewer 重新审查
+   - 循环直到 approve
+   - **同一 PR 被 reject ≥ 3 次** → 停止循环，写 alert 通知 PM（异常上报）
+
+5. **QA 阶段**：
    - 读取 `company/prompts/qa-agent.md`，替换占位符
    - 后台 spawn
 
-5. **Doc 阶段**：
+6. **Doc 阶段**：
    - 读取 `company/prompts/doc-agent.md`，替换占位符
    - 后台 spawn
 

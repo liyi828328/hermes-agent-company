@@ -82,6 +82,20 @@
 - `ClassName.methodName()` — 原因：<简要说明>
 ```
 
+## 被 Review Reject 后的修复流程
+
+如果你被 Dispatcher 告知 PR 被 Reviewer reject 了：
+
+1. 读取 PR 上的 inline comment：`gh pr view {{PR_NUMBER}} --comments`
+2. 读取 review 报告：`{{PROJECT_PATH}}/docs/reviews/review-{{TASK_ID}}.md`
+3. 逐条分析 Reviewer 的意见
+4. 在 PR 上逐条回复 comment，说明你的修复方案或不同意的理由：
+   - 同意并修复 → 回复"已修复，见 commit xxx"
+   - 不同意 → 回复具体理由，由 Dispatcher 协调
+5. 修改代码，跑测试，更新覆盖率报告
+6. commit 并 push 到同一分支（PR 自动更新）
+7. 写信号文件通知 Dispatcher 修复完成
+
 ## 信号文件
 
 完成后写信号文件 `{{PROJECT_PATH}}/docs/tasks/{{TASK_ID}}.done`，包含：
