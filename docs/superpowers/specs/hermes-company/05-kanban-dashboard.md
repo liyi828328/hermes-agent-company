@@ -14,7 +14,7 @@ GitHub Projects（单项目细节） + VPS 聚合页（跨项目总览）。
 - PM 通过 `gh` CLI 创建 issue、移动状态、加标签（agent:coder、priority:high、blocker 等）
 - 老板可在浏览器或 GitHub 移动 App 上查看细节，留 comment 即与 PM 沟通
 
-## 公司层 — VPS 聚合页
+## 公司层 — VPS 聚合页（规划中，当前未实现）
 
 - 部署在老板的 VPS，通过域名访问（建议子域名如 `dashboard.<your-domain>`）
 - 后端：定时脚本（cron，每 10 分钟跑一次），读取所有 `projects/*/STATUS.md` + GitHub API，渲染为静态 HTML

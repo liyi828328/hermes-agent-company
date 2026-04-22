@@ -11,7 +11,7 @@
 
 ## 档案结构
 
-每个项目仓库内部结构：
+每个项目仓库内部结构（scaffold 模板只预设 docs/ 目录和 STATUS.md，src/ tests/ CHANGELOG.md 等由 Architect 按需创建）：
 
 ```
 <项目代号>/                    # = GitHub 私仓根目录
@@ -41,8 +41,8 @@
 │   ├── DEPLOY.md              # Doc Agent 维护
 │   ├── DATABASE.md            # Doc Agent 维护（如有数据库）
 │   └── USER-GUIDE.md          # Doc Agent 维护（如有用户界面）
-├── src/                       # 业务代码
-├── tests/                     # 测试代码
+├── src/                       # 业务代码（目录结构由 Architect 在架构文档中定义）
+├── tests/                     # 测试代码（目录结构由 Architect 在架构文档中定义）
 │   ├── unit/                  # 单元测试（Coder 写）
 │   ├── integration/           # 集成测试（Coder 写）
 │   └── e2e/                   # E2E 测试（QA 写）
@@ -68,6 +68,7 @@
 - Reviewer 通过 PR review 留 comment
 - PM 通过 `gh` CLI 操作 issue / PR / project board
 - **git commit message 一律使用中文描述**
+- 项目创建自动化：`company/scripts/new-project.sh <项目代号>`（创建 GitHub 私仓、clone、复制 scaffold 模板、首次提交）
 
 ## PR 审核流水线
 
