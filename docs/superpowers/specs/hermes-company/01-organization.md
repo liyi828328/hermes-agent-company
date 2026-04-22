@@ -23,7 +23,7 @@
 |------|-----|-----------|
 | 接老板需求 | ✅ | |
 | 写 PRD | ✅ | |
-| 汇报/简报/异常通知推 Telegram | ✅ | |
+| 汇报/简报/异常通知推飞书 | ✅ | |
 | 回答老板查询 | ✅ | |
 | 拆任务为 GitHub Issues | | ✅ |
 | spawn 子 agent（Architect/Coder/Reviewer/QA/Doc） | | ✅ |
@@ -39,7 +39,7 @@
 
 **PM ↔ Dispatcher 通信机制**（纯文件，不直接对话）：
 - PM 写 `docs/prd.md` 标记 `status: approved` → Dispatcher 检测到后开始调度
-- Dispatcher 写 `company/pm-state/alerts.jsonl` → PM 轮询读到后推 Telegram
+- Dispatcher 写 `company/pm-state/alerts.jsonl` → PM 轮询读到后推飞书
 - Dispatcher 更新 `docs/tasks/tasks.md` → PM 从中生成 STATUS.md 摘要
 
 **Designer 不设 agent**，能力拆为两层：

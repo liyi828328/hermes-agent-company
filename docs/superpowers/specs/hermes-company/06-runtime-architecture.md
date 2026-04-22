@@ -8,17 +8,31 @@
 ## PM Agent — 常驻
 
 - 实现：独立的 Hermes profile（`hermes profile create pm-agent`）
-- 启动方式：作为 systemd / launchd 服务常驻，挂在 Telegram gateway
-- 唯一对话方：老板（白名单限制）
-- 职责：接需求、写 PRD、汇报、简报、回答查询、读 alert 推 Telegram
+- 启动方式：作为 launchd（macOS）/ systemd（Linux）服务常驻，挂在飞书 gateway
+- 安装命令：`pm-agent gateway install`（自动注册为系统服务，开机启动、挂了自动重启）
+- 唯一对话方：老板（飞书用户授权）
+- 职责：接需求、写 PRD、汇报、简报、回答查询、读 alert 推飞书
 - 上下文轻量：不做调度/监控，session 短，响应快
+- 飞书凭证：`FEISHU_APP_ID` + `FEISHU_APP_SECRET` 配置在 profile 的 `.env` 中
+- 飞书订阅方式：长连接（WebSocket），无需公网回调地址
 
 ## Dispatcher Agent — 常驻
 
 - 实现：独立的 Hermes profile（`hermes profile create dispatcher-agent`）
-- 启动方式：作为 systemd / launchd 服务常驻，后台运行
+- 启动方式：**不常驻进程**，通过 Hermes 内置 cron 每 5 分钟触发扫描脚本
+- cron job 挂在 PM Agent 的 gateway 下（PM gateway 已常驻）
+- 扫描脚本：`company/scripts/dispatcher-poll.sh`
+- 锁文件：`company/pm-state/dispatcher.lock`（防止重复触发）
 - 不对人说话，纯自动化引擎
-- 职责：读 PRD → 拆任务 → spawn 子 agent → 管 merge 队列 → 跑监控循环 → 更新看板/dashboard → 异常写 alert
+- 工作流程：
+  1. cron 每 5 分钟触发扫描脚本
+  2. 脚本检查锁文件——有锁则跳过
+  3. 扫描 `projects/*/docs/prd.md` 和 `architecture.md` 的 status 变化
+  4. 检查信号文件是否有未处理的状态变化
+  5. 有变化 → 创建锁文件 → 启动 `dispatcher-agent --yolo chat -q "..."` 处理
+  6. Dispatcher 完成后删除锁文件
+  7. 没变化 → 静默退出
+- 锁文件超时保护：锁文件超过 2 小时自动删除（防止残留锁）
 - 与 PM 通过档案文件通信（`company/pm-state/alerts.jsonl`、`docs/tasks/tasks.md`、`STATUS.md`）
 - 故障隔离：Dispatcher 挂了不影响老板与 PM 通信；PM 挂了 Dispatcher 继续调度
 
@@ -65,13 +79,13 @@ Dispatcher spawn 子 agent 时根据任务规模选择方式：
 ### 协调链路总览
 
 ```
-老板 ←→ PM：Telegram 消息
+老板 ←→ PM：飞书消息
 PM → Dispatcher：docs/prd.md 中 status: approved
 Dispatcher → 子 agent：spawn 时 prompt 注入（项目代号、任务 ID、文件路径）
 Dispatcher ← 子 agent：子 agent 写文件到项目 repo（代码/PR/测试报告/文档）
 Dispatcher → PM：company/pm-state/alerts.jsonl（异常告警）
 Dispatcher → PM：docs/tasks/tasks.md + STATUS.md（进度数据）
-PM → 老板：读 alerts + STATUS.md → 推 Telegram
+PM → 老板：读 alerts + STATUS.md → 推飞书
 ```
 
 ### 任务完成信号机制

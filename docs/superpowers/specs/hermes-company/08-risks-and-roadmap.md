@@ -23,7 +23,7 @@
 | Reviewer 变橡皮图章 | Reviewer prompt 强制要求"必须列 ≥ 2 条改进建议否则视为失职"；定期老板抽查 PR |
 | Agent 之间契约失同步 | 严格契约规则 + Coder 越界自动 reject + ADR 不可变追加 |
 | PM 单点故障 | PM 状态全部持久化到 `company/pm-state/`，重启可恢复；常驻服务有 systemd/launchd 自动拉起 |
-| 老板被 Telegram 淹没 | 静默时段 + 每日简报合并 + PM 单一汇报口 + 噪音过滤 |
+| 老板被飞书淹没 | 静默时段 + 每日简报合并 + PM 单一汇报口 + 噪音过滤 |
 | Hermes session 状态丢失 | 子 agent 全部基于档案文件工作，无内存依赖；session 丢失只损失正在跑的那一步，重启即恢复 |
 | 安全（agent 拿到密钥泄露） | 所有密钥放老板的 `.env`，spec 阶段禁止 agent 读取；需要时由老板手动注入到部署脚本 |
 
@@ -45,7 +45,7 @@
 进入 writing-plans 阶段，产出 Phase 1 实施计划。Phase 1 推荐范围：
 
 1. 工作空间骨架 + git 初始化（已完成）
-2. PM Agent profile 创建 + Telegram 白名单 + 常驻服务配置
+2. PM Agent profile 创建 + 飞书用户授权 + 常驻服务配置
 3. 项目档案模板（templates/）
 4. 监控循环脚本骨架
 5. Dashboard 聚合页 MVP（先本地能跑，再上 VPS）

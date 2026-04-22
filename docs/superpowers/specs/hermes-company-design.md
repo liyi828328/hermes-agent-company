@@ -18,7 +18,7 @@
 
 ## 2. 基础设施现状
 
-老板已具备：服务器/VPS、域名、GitHub 私仓、Hermes CLI + Telegram gateway。
+老板已具备：服务器/VPS、域名、GitHub 私仓、Hermes CLI + 飞书 gateway。
 
 按需补办：微信小程序账号、苹果/Google 开发者账号、云服务、对象存储、数据库、设计资源、支付通道。
 
@@ -42,7 +42,7 @@ DevOps 由老板亲自承担（不设 DevOps Agent）。
 ```
               老板（liyi）
                    ↑
-                   │ Telegram（唯一对接）
+                   │ 飞书（唯一对接）
                    │
               PM Agent（常驻）
                    ↑ alerts 文件
@@ -69,7 +69,7 @@ DevOps 由老板亲自承担（不设 DevOps Agent）。
 ### 5.1 新项目从需求到首个里程碑
 
 ```
-老板（Telegram）→ "做个 X 小程序"
+老板（飞书）→ "做个 X 小程序"
      ↓
 PM Agent 提问澄清 → 写 PRD 草稿 → 推老板
      ↓ （介入点 1：需求确认）
@@ -101,7 +101,7 @@ PM 推送演示链接 → 老板签字
      ↓
 第一层（被动）：写 log + 更新 dashboard
      ↓ 命中第二层阈值
-第二层（通知）：PM 推 Telegram → 老板决策
+第二层（通知）：PM 推飞书 → 老板决策
      ↓ 命中第三层阈值（或第二层超时）
 第三层（熔断）：Dispatcher 强杀 agent + 暂存现场 + 通知老板
      ↓
