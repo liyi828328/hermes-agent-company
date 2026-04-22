@@ -56,8 +56,20 @@ for PROJECT_DIR in "$PROJECTS_DIR"/*/; do
         fi
     fi
     
-    # 2. 架构完成（有信号文件）但 status 还是 pending_review → 等老板审批，不触发
-    # （这个状态由 PM 通知老板，老板审批后改 status，下一轮 cron 再检测）
+    # 2. 架构完成（有信号文件）但 status 是 pending_review → 写 alert 通知 PM
+    if [ -z "$TRIGGER_REASON" ] && [ -f "$ARCH_FILE" ]; then
+        ARCH_DONE="${PROJECT_DIR}docs/tasks/arch-001.done"
+        ARCH_STATUS=$(grep -i "status:" "$ARCH_FILE" | head -1 | sed 's/.*status:\s*//' | tr -d ' ')
+        ALERT_FILE="${LOCK_DIR}/alerts.jsonl"
+        if [ -f "$ARCH_DONE" ] && [ "$ARCH_STATUS" = "pending_review" ]; then
+            # 检查是否已经发过这个 alert（避免重复）
+            if ! grep -q "arch-pending-review-${PROJECT_CODE}" "$ALERT_FILE" 2>/dev/null; then
+                echo "{\"id\":\"arch-pending-review-${PROJECT_CODE}\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"project\":\"${PROJECT_CODE}\",\"agent\":\"Architect\",\"type\":\"需要审批\",\"message\":\"架构设计已完成，等待老板审批。请查看 docs/architecture.md 并将 status 改为 approved。\"}" >> "$ALERT_FILE"
+                echo "[${PROJECT_CODE}] 架构完成等审批，已写 alert 通知 PM"
+            fi
+            continue
+        fi
+    fi
     
     # 3. 架构 approved 但还没拆任务
     if [ -z "$TRIGGER_REASON" ] && [ -f "$ARCH_FILE" ]; then
