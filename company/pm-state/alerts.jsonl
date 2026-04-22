@@ -1,1 +1,0 @@
-{"id":"arch-pending-review-weather-api","timestamp":"2026-04-22T08:46:58Z","project":"weather-api","agent":"Architect","type":"需要审批","message":"架构设计已完成，等待老板审批。请查看 docs/architecture.md 并将 status 改为 approved。"}
