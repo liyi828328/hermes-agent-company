@@ -31,16 +31,23 @@ TRIGGER_REASON=""
 for PROJECT_DIR in "$PROJECTS_DIR"/*/; do
     PROJECT_CODE=$(basename "$PROJECT_DIR")
     
+    # 跳过已交付的项目（STATUS.md 中有"交付"标记为完成）
+    STATUS_FILE="${PROJECT_DIR}STATUS.md"
+    if [ -f "$STATUS_FILE" ] && grep -q "\[x\].*交付" "$STATUS_FILE" 2>/dev/null; then
+        continue
+    fi
+    
     # 1. 检查 PRD 是否 approved 但架构还没开始
     PRD_FILE="${PROJECT_DIR}docs/prd.md"
     ARCH_FILE="${PROJECT_DIR}docs/architecture.md"
     if [ -f "$PRD_FILE" ]; then
         PRD_STATUS=$(grep -i "status:" "$PRD_FILE" | head -1 | sed 's/.*status:\s*//' | tr -d ' ')
         if [ "$PRD_STATUS" = "approved" ]; then
-            # 检查架构是否已经存在（非模板状态）
-            ARCH_LINES=$(wc -l < "$ARCH_FILE" 2>/dev/null || echo "0")
+            # 检查架构是否已经有实质内容（不是空模板）
             ARCH_DONE="${PROJECT_DIR}docs/tasks/arch-001.done"
-            if [ "$ARCH_LINES" -lt 10 ] && [ ! -f "$ARCH_DONE" ]; then
+            ARCH_HAS_CONTENT=$(grep -c "status:" "$ARCH_FILE" 2>/dev/null)
+            if [ -z "$ARCH_HAS_CONTENT" ]; then ARCH_HAS_CONTENT=0; fi
+            if [ ! -f "$ARCH_DONE" ] && [ "$ARCH_HAS_CONTENT" = "0" ]; then
                 TRIGGER_REASON="项目 ${PROJECT_CODE} PRD 已批准，需要启动架构设计"
                 break
             fi
