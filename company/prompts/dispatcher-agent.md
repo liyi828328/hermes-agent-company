@@ -108,8 +108,10 @@
 **spawn 标准流程**：
 1. 读取 `company/prompts/<角色>.md`，将 `{{PROJECT_CODE}}`、`{{PROJECT_PATH}}`、`{{TASK_ID}}` 等占位符替换为实际值
 2. 用 `terminal(command='hermes chat -q "替换后的完整prompt"', background=true, notify_on_complete=true)` 启动子 agent
-3. 收到完成通知后，读取信号文件 `docs/tasks/<task-id>.done` 或 `.failed` 获取结果
-4. 根据结果决定下一步
+3. **必须等待子 agent 完成**——使用 `process(action='wait')` 阻塞等待进程退出，不许启动后就退出
+4. 收到完成通知后，读取信号文件 `docs/tasks/<task-id>.done` 或 `.failed` 获取结果
+5. 根据结果决定下一步（继续下一阶段 / 写 alert / 触发闭环修复）
+6. **需要老板介入时**（架构审批、里程碑签字）：写 alert 到 `company/pm-state/alerts.jsonl`，然后退出。下一轮 cron 会在老板操作后重新触发
 
 **具体命令示例**（Architect）：
 ```
