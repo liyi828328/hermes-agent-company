@@ -39,7 +39,7 @@
 ## 干活 Agent — 按需 spawn
 
 - Architect / Coder / Reviewer / QA / Doc 全部按需启动，干完即退
-- 启动方式：Dispatcher 通过 `delegate_task` 或 `hermes chat -q` spawn 子进程
+- 启动方式：Dispatcher 通过 `hermes chat -q` spawn 子进程
 - 多个 Coder 可并行（用 `hermes -w` worktree 模式避免 git 冲突）
 - 子 agent 不直接对话老板，产出回流到 Dispatcher
 
@@ -57,20 +57,12 @@
 
 ---
 
-## Spawn 方式选择标准
+## Spawn 方式
 
-Dispatcher spawn 子 agent 时根据任务规模选择方式：
+所有子 agent 统一通过 `hermes chat -q` 启动独立进程，不使用 `delegate_task`。
 
-| 方式 | 适用场景 | 典型角色 |
-|------|---------|---------|
-| `delegate_task` | 短任务，预估 < 40 tool calls | Reviewer（审 PR）、Doc（写文档）、Architect（出方案） |
-| `hermes chat -q` | 长任务，预估 ≥ 40 tool calls | Coder（写模块）、QA（E2E 测试） |
-
-关键区别：
-- `delegate_task`：50 tool calls 上限，不能再 delegate，结果直接回到 Dispatcher session
-- `hermes chat -q`：完全独立进程，无 turn 限制，产出通过档案文件传递
+- 完全独立进程，无 turn 限制，产出通过档案文件传递
 - 多个 Coder 用 `hermes chat -q` 时加 `-w`（worktree 模式）避免 git 冲突
-- 边界情况拿不准时，偏向用 `hermes chat -q`（宁可多开进程也不要任务跑到一半撞 50 call 上限）
 
 ## Agent 间协调机制
 
@@ -90,13 +82,8 @@ PM → 老板：读 alerts + STATUS.md → 推飞书
 
 ### 任务完成信号机制
 
-子 agent 完成任务后，Dispatcher 需要知道"干完了"并检查产出。按 spawn 方式分两套机制：
+子 agent 完成任务后，Dispatcher 需要知道"干完了"并检查产出：
 
-**delegate_task 的任务（短任务）**：
-- 结果自动回到 Dispatcher session，天然知道完成
-- 不需要额外信号
-
-**hermes chat -q 的任务（长任务）**：
 - Dispatcher 用 `background=true` + `notify_on_complete=true` 启动子进程
 - 子进程退出时 Dispatcher 自动收到通知
 - Dispatcher 收到通知后检查信号文件：

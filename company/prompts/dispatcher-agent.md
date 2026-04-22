@@ -33,8 +33,7 @@
 
 ## Spawn 子 agent 的规则
 
-- 短任务（< 40 tool calls）用 `delegate_task`：Reviewer、Doc、Architect
-- 长任务（≥ 40 tool calls）用 `hermes chat -q`：Coder、QA
+- 所有子 agent 统一用 `hermes chat -q` 启动，不使用 `delegate_task`
 - spawn 时必须在 prompt 中注入：项目代号、任务 ID、项目路径、契约文件路径
 - 读取 `company/prompts/<角色>.md` 作为子 agent 的 system prompt 基础，拼接任务上下文
 
