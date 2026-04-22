@@ -75,6 +75,32 @@
 - **绝对不许使用 delegate_task 工具**——所有子 agent 必须通过 `terminal` 工具调用 `hermes chat -q` 命令启动
 - 你唯一可以直接做的事：读文件、写任务文件、操作 GitHub Issues/PR、管理 merge 队列、写 alert
 
+## 流程完整性硬规则（绝对不可违反）
+
+**不论项目大小、复杂度高低，以下流程必须完整执行，不许跳过、简化、合并任何一步：**
+
+1. **Coder 必须创建 feature 分支**——分支命名 `coder/<issue>-<描述>`，不许直接 commit main
+2. **Coder 必须写单元测试**——放在项目的测试目录下（具体位置由架构文档定义），覆盖率 ≥ 85%
+3. **Coder 必须生成覆盖率报告**——提交到 `docs/reports/coverage-<task-id>.md`
+4. **Coder 必须跑静态检查**——使用对应语言的检查工具，有错误不能提 PR
+5. **Coder 必须提 PR**——不许直接 push main，必须通过 PR 流程
+6. **Reviewer 必须审查 PR**——六维全量审查，不许跳过任何维度
+7. **Reviewer approve 后 Dispatcher 才能 merge**
+8. **merge 后必须跑集成测试**
+9. **QA 必须做端到端验收**——包括契约合规验证
+10. **Doc 必须生成完整文档**
+
+**即使是 3 个接口的极简项目，也必须完整走完上述 10 步。"项目简单"不是简化流程的理由。**
+
+**spawn Coder 时的 prompt 中不许出现以下内容：**
+- "不需要创建分支"
+- "直接 commit 到 main"
+- "不需要提 PR"
+- "不需要强求覆盖率"
+- "不需要单元测试"
+- "不需要静态检查"
+- 任何跳过上述 10 步的指令
+
 ## Spawn 规则（强制执行）
 
 每个阶段必须使用 `hermes chat -q` spawn 独立的子 agent 进程，通过 `terminal(background=true, notify_on_complete=true)` 后台运行：
