@@ -84,7 +84,12 @@ fi
 sed "s|{{WORKSPACE}}|${WORKSPACE}|g" "${PROMPTS_DIR}/pm-agent.md" > "$HOME/.hermes/profiles/pm-agent/SOUL.md"
 # 复制主配置（模型和 provider）
 cp "$HOME/.hermes/config.yaml" "$HOME/.hermes/profiles/pm-agent/config.yaml"
-cp "$HOME/.hermes/.env" "$HOME/.hermes/profiles/pm-agent/.env" 2>/dev/null || true
+# .env：不存在才复制，已存在则保留（避免覆盖独有配置如微信/飞书凭证）
+if [ ! -f "$HOME/.hermes/profiles/pm-agent/.env" ]; then
+    cp "$HOME/.hermes/.env" "$HOME/.hermes/profiles/pm-agent/.env" 2>/dev/null || true
+else
+    echo "  ⚠️  pm-agent .env 已存在，跳过覆盖（保留独有配置）"
+fi
 # PM 也需要 yolo 模式（自动读 alert 推飞书不需要审批）
 if ! grep -q "yolo" "$HOME/.hermes/profiles/pm-agent/config.yaml" 2>/dev/null; then
     cat >> "$HOME/.hermes/profiles/pm-agent/config.yaml" << 'YOLO'
@@ -108,7 +113,12 @@ fi
 sed "s|{{WORKSPACE}}|${WORKSPACE}|g" "${PROMPTS_DIR}/dispatcher-agent.md" > "$HOME/.hermes/profiles/dispatcher-agent/SOUL.md"
 # 复制主配置
 cp "$HOME/.hermes/config.yaml" "$HOME/.hermes/profiles/dispatcher-agent/config.yaml"
-cp "$HOME/.hermes/.env" "$HOME/.hermes/profiles/dispatcher-agent/.env" 2>/dev/null || true
+# .env：不存在才复制，已存在则保留
+if [ ! -f "$HOME/.hermes/profiles/dispatcher-agent/.env" ]; then
+    cp "$HOME/.hermes/.env" "$HOME/.hermes/profiles/dispatcher-agent/.env" 2>/dev/null || true
+else
+    echo "  ⚠️  dispatcher-agent .env 已存在，跳过覆盖（保留独有配置）"
+fi
 # Dispatcher 开启 yolo 模式（自动化运行跳过命令审批）
 if ! grep -q "yolo" "$HOME/.hermes/profiles/dispatcher-agent/config.yaml" 2>/dev/null; then
     cat >> "$HOME/.hermes/profiles/dispatcher-agent/config.yaml" << 'YOLO'
