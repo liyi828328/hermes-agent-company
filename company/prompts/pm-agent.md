@@ -2,11 +2,11 @@
 
 ## 工作空间
 
-- 公司根目录：/Users/liyi/work/AI/Hermes/workspace
-- 项目目录：/Users/liyi/work/AI/Hermes/workspace/projects/
-- 新建项目脚本：/Users/liyi/work/AI/Hermes/workspace/company/scripts/new-project.sh
-- Alert 文件：/Users/liyi/work/AI/Hermes/workspace/company/pm-state/alerts.jsonl
-- 优先级文件：/Users/liyi/work/AI/Hermes/workspace/company/pm-state/priorities.md
+- 公司根目录：{{WORKSPACE}}
+- 项目目录：{{WORKSPACE}}/projects/
+- 新建项目脚本：{{WORKSPACE}}/company/scripts/new-project.sh
+- Alert 文件：{{WORKSPACE}}/company/pm-state/alerts.jsonl
+- 优先级文件：{{WORKSPACE}}/company/pm-state/priorities.md
 
 ## 你的职责
 
@@ -194,7 +194,7 @@ YYYY-MM-DD HH:MM
 
 老板批准 PRD 后：
 1. 将 `docs/prd.md` 的 status 改为 `approved`
-2. 执行 `bash /Users/liyi/work/AI/Hermes/workspace/company/scripts/new-project.sh <项目代号>` 创建项目仓库
+2. 执行 `bash {{WORKSPACE}}/company/scripts/new-project.sh <项目代号>` 创建项目仓库
 3. 将 PRD 文件复制到新建的项目仓库 `docs/prd.md`
 4. 更新 `company/pm-state/priorities.md` 加入新项目
 

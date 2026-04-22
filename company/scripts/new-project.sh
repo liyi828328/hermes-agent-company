@@ -47,8 +47,13 @@ cp -r "${TEMPLATE_DIR}/"* "${PROJECT_DIR}/"
 cp "${TEMPLATE_DIR}/.gitignore" "${PROJECT_DIR}/.gitignore"
 
 # 替换占位符
-find "${PROJECT_DIR}" -type f -name "*.md" -exec sed -i '' "s/{{PROJECT_NAME}}/${PROJECT_CODE}/g" {} \;
-find "${PROJECT_DIR}" -type f -name "*.md" -exec sed -i '' "s/{{DATE}}/${DATE}/g" {} \;
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    SED_INPLACE=(sed -i '')
+else
+    SED_INPLACE=(sed -i)
+fi
+find "${PROJECT_DIR}" -type f -name "*.md" -exec "${SED_INPLACE[@]}" "s/{{PROJECT_NAME}}/${PROJECT_CODE}/g" {} \;
+find "${PROJECT_DIR}" -type f -name "*.md" -exec "${SED_INPLACE[@]}" "s/{{DATE}}/${DATE}/g" {} \;
 
 # 4. 首次提交
 echo ""

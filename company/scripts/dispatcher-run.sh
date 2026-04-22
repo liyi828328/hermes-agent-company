@@ -12,12 +12,12 @@ if [ -z "$1" ]; then
 fi
 
 PROJECT_CODE="$1"
-WORKSPACE="/Users/liyi/work/AI/Hermes/workspace"
+WORKSPACE="${HERMES_WORKSPACE:-$(cd "$(dirname "$0")/../.." && pwd)}"
 PROJECT_PATH="${WORKSPACE}/projects/${PROJECT_CODE}"
 LOCK_DIR="${WORKSPACE}/company/pm-state"
 LOCK_FILE="${LOCK_DIR}/dispatcher-${PROJECT_CODE}.lock"
 ALERT_FILE="${LOCK_DIR}/alerts.jsonl"
-DISPATCHER="/Users/liyi/.local/bin/dispatcher-agent"
+DISPATCHER="${DISPATCHER_CMD:-dispatcher-agent}"
 LOG_FILE="${WORKSPACE}/company/logs/dispatcher-${PROJECT_CODE}.log"
 
 # 检查项目是否存在

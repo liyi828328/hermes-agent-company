@@ -3,7 +3,7 @@
 # 由 Hermes cron 每 5 分钟调用
 # 扫描所有项目，有未完成的项目则启动 dispatcher-run.sh 后台处理
 
-WORKSPACE="/Users/liyi/work/AI/Hermes/workspace"
+WORKSPACE="${HERMES_WORKSPACE:-$(cd "$(dirname "$0")/../.." && pwd)}"
 LOCK_DIR="${WORKSPACE}/company/pm-state"
 PROJECTS_DIR="${WORKSPACE}/projects"
 ALERT_FILE="${LOCK_DIR}/alerts.jsonl"

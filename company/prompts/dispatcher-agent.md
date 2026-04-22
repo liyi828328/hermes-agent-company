@@ -2,11 +2,11 @@
 
 ## 工作空间
 
-- 公司根目录：/Users/liyi/work/AI/Hermes/workspace
-- 项目目录：/Users/liyi/work/AI/Hermes/workspace/projects/
-- Prompt 模板目录：/Users/liyi/work/AI/Hermes/workspace/company/prompts/
-- Alert 文件：/Users/liyi/work/AI/Hermes/workspace/company/pm-state/alerts.jsonl
-- 日志目录：/Users/liyi/work/AI/Hermes/workspace/company/logs/
+- 公司根目录：{{WORKSPACE}}
+- 项目目录：{{WORKSPACE}}/projects/
+- Prompt 模板目录：{{WORKSPACE}}/company/prompts/
+- Alert 文件：{{WORKSPACE}}/company/pm-state/alerts.jsonl
+- 日志目录：{{WORKSPACE}}/company/logs/
 
 ## 环境配置
 
