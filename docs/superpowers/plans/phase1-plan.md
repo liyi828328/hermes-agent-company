@@ -81,6 +81,6 @@
 - [x] 用新 prompt 重新跑端到端验证（核心流程全部通过：分支/PR/测试/覆盖率/静态检查/Review闭环/QA闭环）
 - [ ] 监控循环（三层防御：被动日志 → 异常通知 → 硬熔断）
 - [ ] Dashboard 聚合页（Python 脚本 + Jinja2 + 静态 HTML）
-- [ ] 接飞书通讯 + PM Agent 常驻（PM 挂在飞书 gateway，老板随时能发消息）
+- [x] 接飞书通讯 + PM Agent 常驻（PM 挂在飞书 gateway，老板随时能发消息）
 - [ ] Dispatcher 常驻 cron 轮询（每 5 分钟启动新 session，扫描项目状态，有事处理没事退出）
 - [ ] 复盘 + 更新设计文档（根据 Phase 1 实施中的发现调整 spec）
