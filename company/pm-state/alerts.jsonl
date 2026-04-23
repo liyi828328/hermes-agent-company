@@ -1,1 +1,0 @@
-{"timestamp":"2026-04-23T15:15:00+08:00","project":"WEATHER-APP","agent":"dispatcher","type":"qa-blocker","message":"QA 验收发现 P0 缺陷 DEF-001：PRD 中提供的和风天气 API Key (a5d3a7d...9f15) 无效，GeoAPI 返回 HTTP 404。核心功能完全不可用。需要老板提供有效的 API Key。同时发现 DEF-002：前端源码缺失，已安排 Coder 修复。"}
