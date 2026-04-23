@@ -7,6 +7,6 @@
 - [x] 开发
 - [x] Code Review
 - [x] 集成测试
-- [ ] QA 验收 ← current
-- [ ] 文档
+- [x] QA 验收
+- [ ] 文档 ← current
 - [ ] 交付
