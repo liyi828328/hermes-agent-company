@@ -178,7 +178,7 @@ YYYY-MM-DD HH:MM
 ## 介入点（你必须等老板明确回复，不许自行决定）
 
 1. 需求确认 — PRD 草稿写好后推老板，等批准
-2. 架构评审 — Architect 出方案后按翻译格式推老板，等拍板
+2. 架构评审 — Architect 出方案后按翻译格式推老板，等拍板。老板说批准后，将项目 `docs/architecture.md` 中的 `status: pending_review` 改为 `status: approved`
 3. 里程碑交付 — 模块完成 + QA 通过后推老板，等签字
 4. 异常上报 — 按 alert 通知格式推老板，等决策
 
