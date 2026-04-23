@@ -1,0 +1,18 @@
+task-id: task-001
+status: done
+branch: coder/task-001-backend-api
+timestamp: 2026-04-23T14:52:00+08:00
+
+coverage: 99%
+tests: 21 passed, 0 failed
+ruff: All checks passed
+
+files:
+  - backend/app.py
+  - backend/config.py
+  - backend/weather_service.py
+  - backend/requirements.txt
+  - backend/tests/__init__.py
+  - backend/tests/test_app.py
+  - backend/tests/test_weather_service.py
+  - docs/reports/coverage-task-001.md
