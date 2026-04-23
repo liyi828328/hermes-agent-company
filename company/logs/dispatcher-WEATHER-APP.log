@@ -593,3 +593,129 @@ a//Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/STATUS.md → b//Use
     现在构造 QA Agent prompt 并 spawn。项目是 Python + Flask 后端 + 纯前端，QA 需要启动后端服务后测试 API。
 ╰──────────────────────────────────────────────────────────────────────────────╯
   ┊ 💻 preparing terminal…
+  ┊ 💻 $         cd /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP && git add -A && git commit -m "更新 STATUS.md：进入 QA 验收阶段" 2>&1 | cat  0.3s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         cd /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP && hermes chat --yolo -q "你是质量保证工程师（QA Agent）。你在所有模块 merge 后做集成测试和端到端验收。你是交付前的最后一道防线。
+
+## 当前任务
+
+- 项目：WEATHER-APP
+- 项目路径：/Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP
+- 任务 ID：qa-001
+
+## 工作流程
+
+### 1. 准备阶段
+
+1. 读 /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/prd.md 的验收标准
+2. 读 /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/contracts/api.yaml（API 契约）
+3. 读 /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/contracts/error-codes.md（错误码规范）
+4. 检查测试环境：后端是 Python Flask 应用，启动命令 cd backend && pip install -r requirements.txt && python app.py
+5. 启动后端服务后对 API 进行端到端测试
+
+### 2. 测试范围
+
+- API 接口测试：GET /api/weather?city=北京，验证返回温度、天气描述、风向
+- 契约合规验证：对比 api.yaml 验证请求/响应格式
+- 错误码验证：空 city 参数返回 400 MISSING_CITY，不存在的城市返回 404 CITY_NOT_FOUND
+- 边界测试：空值、特殊字符
+- 前端页面功能验证（用 browser 工具打开 frontend/index.html 检查 UI 布局和交互）
+
+### 3. 输出
+
+- 测试用例表：/Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/qa/test-cases-qa-001.md
+- 验收报告：/Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/qa/acceptance-report-qa-001.md
+- 如有 bug：缺陷报告 /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/qa/defects-qa-001.md
+
+### 4. 信号文件
+
+- 全部验收通过 → 写 /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/tasks/qa-001.done（内容包含验收结论）
+- 有 P0/P1 未修复 → 写 /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/tasks/qa-001.failed（内容包含缺陷摘要）
+
+### 5. 重要注意
+
+- 后端端口默认 5000，如果 5000 被占用试 5001
+- 启动后端服务用后台方式运行，测试完成后 kill 进程
+- 不许修改代码，只测试和报告
+- gh CLI 不可用，bug 记录在缺陷报告文件中即可，不需要创建 GitHub Issue
+- 验收阻塞规则：有 P0 或 P1 未修复 → 验收不通过"  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    QA Agent 已在后台启动（session: proc_44f8b92a09cb）。等待完成通知...
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      wait proc_44f8b92  60.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    QA agent 还在跑。让我继续等待。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      wait proc_44f8b92  60.7s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    QA agent 正在调试和风天气 API 问题。继续等待。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      wait proc_44f8b92  60.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    看起来输出没变化，可能卡住了。让我看最新的日志。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      log proc_44f8b92  0.0s
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      log proc_44f8b92  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    QA agent 还在运行，正在调试 API 问题。继续等。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      wait proc_44f8b92  60.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    QA agent 发现前端代码缺失。继续等待它完成并写信号文件。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚙️ preparing process…
+  ┊ ⚙️  proc      wait proc_44f8b92  42.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    QA 完成，验收不通过。发现 3 个缺陷：
+    - DEF-001 [P0]: API Key 无效
+    - DEF-002 [P0]: 前端源码缺失
+    - DEF-003 [P1]: 城市查询错误码问题
+    
+    进入 QA 闭环修复流程。先读取缺陷报告详情，然后 spawn Coder 修复。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 📖 preparing read_file…
+  ┊ 🔎 preparing search_files…
+  ┊ 📖 read      /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/qa/defects-qa-001.md  1.2s
+  ┊ 🔎 find      *  0.9s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    确认前端确实缺少源码文件。现在需要进入 QA 闭环。分析缺陷：
+    
+    1. DEF-001 (P0): API Key 无效 — 这不是代码 bug，是 PRD 提供的 key 无效。这需要上报。
+    2. DEF-002 (P0): 前端源码缺失 — 这是 Coder 问题，可以 spawn Coder 修复。
+    3. DEF-003 (P1): 错误码问题 — 需要 API key 修复后复测。
+    
+    DEF-001 是 API Key 问题，属于需求/配置层面，Coder 无法自行解决。我需要先验证一下这个 API key 是否真的无效，然后决定处理方式。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         curl -s 'https://geoapi.qweather.com/v2/city/lookup?location=beijing&key=a5d3a7d4e32c4c7d880025b161cc9f15' 2>&1  0.3s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         curl -sv 'https://geoapi.qweather.com/v2/city/lookup?location=beijing&key=a5d3a7d4e32c4c7d880025b161cc9f15' 2>&1 | tail -20  0.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    API Key 确实无效（返回 404 空响应）。这是 PRD 层面的问题，需要上报给 PM/老板获取有效 key。
+    
+    同时 DEF-002（前端源码缺失）是 Coder 可以修复的问题。我先同时处理两件事：
+    1. 写 alert 上报 API Key 无效问题
+    2. Spawn Coder 修复前端源码缺失（DEF-002）
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo '{"timestamp":"2026-04-23T15:15:00+08:00","project":"WEATHER-APP","agent":"dispatcher","type":"qa-blocker","message":"QA 验收发现 P0 缺陷 DEF-001：PRD 中提供的和风天气 API Key (a5d3a7d...9f15) 无效，GeoAPI 返回 HTTP 404。核心功能完全不可用。需要老板提供有效的 API Key。同时发现 DEF-002：前端源码缺失，已安排 Coder 修复。"}' >> /Users/liyi/work/AI/Hermes/workspace/company/pm-state/alerts.jsonl  0.2s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    先 commit QA 报告，然后 spawn Coder 修复前端缺失问题。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
