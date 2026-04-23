@@ -25,6 +25,7 @@
 
 14. dispatcher-run.sh 超时值偏短
 15. README/DEPLOY模板合规
+16. gh CLI 在 Dispatcher Agent 环境未登录（自动降级本地模式，PR/Issue功能受限）
 
 ## ✅ 已完成
 
