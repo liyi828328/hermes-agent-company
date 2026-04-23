@@ -1,0 +1,14 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "no-undef": "error",
+    "no-unused-vars": "warn",
+    "no-redeclare": "error",
+    "eqeqeq": "warn",
+    "no-console": "off"
+  }
+}
