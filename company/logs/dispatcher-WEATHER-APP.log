@@ -479,3 +479,117 @@ GET http://localhost:5000/api/weather?city=xxx
     Both agents are still running. Let me wait longer.
 ╰──────────────────────────────────────────────────────────────────────────────╯
   ┊ ⚙️ preparing process…
+[2026-04-23 15:07:59] [WEATHER-APP] 阶段 [Merge+集成测试] 完成 (exit: 0)
+[2026-04-23 15:07:59] [WEATHER-APP] 阶段 6：启动 QA 验收
+[2026-04-23 15:07:59] [WEATHER-APP] 阶段 [QA验收] 开始
+
+╭──────────── Hermes Agent v0.10.0 (2026.4.16) · upstream 88b6eb9a ────────────╮
+│                                      Available Tools                         │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⣀⣀⠀⢀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    browser: browser_back, browser_cdp,     │
+│    ⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⣇⠸⣿⣿⠇⣸⣿⣿⣷⣦⣄⡀⠀⠀⠀⠀⠀⠀    browser_click, ...                      │
+│    ⠀⢀⣠⣴⣶⠿⠋⣩⡿⣿⡿⠻⣿⡇⢠⡄⢸⣿⠟⢿⣿⢿⣍⠙⠿⣶⣦⣄⡀⠀    clarify: clarify                        │
+│    ⠀⠀⠉⠉⠁⠶⠟⠋⠀⠉⠀⢀⣈⣁⡈⢁⣈⣁⡀⠀⠉⠀⠙⠻⠶⠈⠉⠉⠀⠀    code_execution: execute_code            │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⡿⠛⢁⡈⠛⢿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    cronjob: cronjob                        │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⣿⣦⣤⣈⠁⢠⣴⣿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    delegation: delegate_task               │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠻⢿⣿⣦⡉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    discord: discord_server                 │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢷⣦⣈⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    file: patch, read_file, search_files,   │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣴⠦⠈⠙⠿⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    write_file                              │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣤⡈⠁⢤⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    homeassistant: ha_call_service,         │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    ha_get_state, ...                       │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠑⢶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    (and 12 more toolsets...)               │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠁⢰⡆⠈⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                                            │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⠈⣡⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    Available Skills                        │
+│    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    apple: apple-notes, apple-reminders,    │
+│                                      findmy, imessage                        │
+│  claude-opus-4.6-1m · Nous Research  autonomous-ai-agents: claude-code,      │
+│             /Users/liyi              codex, hermes-agent, opencode           │
+│   Session: 20260423_150800_452f7a    creative: architecture-diagram,         │
+│                                      ascii-art, ascii-video, b...            │
+│                                      data-science: jupyter-live-kernel       │
+│                                      devops: webhook-subscriptions           │
+│                                      email: himalaya                         │
+│                                      gaming: minecraft-modpack-server,       │
+│                                      pokemon-player                          │
+│                                      general: dogfood                        │
+│                                      github: codebase-inspection,            │
+│                                      github-auth, github-code-r...           │
+│                                      leisure: find-nearby                    │
+│                                      mcp: mcporter, native-mcp               │
+│                                      media: gif-search, heartmula, songsee,  │
+│                                      youtube-content                         │
+│                                      mlops: audiocraft-audio-generation,     │
+│                                      axolotl, clip, dsp...                   │
+│                                      note-taking: obsidian                   │
+│                                      productivity: google-workspace,         │
+│                                      linear, maps, nano-pdf, notio...        │
+│                                      red-teaming: godmode                    │
+│                                      research: arxiv, blogwatcher,           │
+│                                      llm-wiki, polymarket, resea...          │
+│                                      smart-home: openhue                     │
+│                                      social-media: xurl                      │
+│                                      software-development:                   │
+│                                      dispatcher-project-pipeline, plan,      │
+│                                      requesting-c...                         │
+│                                                                              │
+│                                      Profile: dispatcher-agent               │
+│                                      28 tools · 81 skills · /help for        │
+│                                      commands                                │
+│                                      ⚠ 161 commits behind — run hermes       │
+│                                      update to update                        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Query: 项目 WEATHER-APP 
+集成测试已通过。项目路径：/Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-
+APP。请执行以下步骤：1) spawn QA Agent 做端到端验收 2) 等待 QA 完成 3) 
+如果验收失败则启动 QA 闭环（Coder 修 bug → Reviewer 审 → merge → QA 回归）4) 
+验收通过后退出。
+Initializing agent...
+────────────────────────────────────────
+
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    我先加载相关的 skill 和项目文件。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 📚 preparing skill_view…
+  ┊ 🔎 preparing search_files…
+  ┊ 📖 preparing read_file…
+  ┊ 📚 skill     dispatcher-project-pipeline  0.0s
+  ┊ 🔎 find      *  0.9s
+  ┊ 📖 read      /Users/liyi/work/AI/Hermes/workspace/company/prompts/qa-agent.md  1.2s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    好，现在读取项目的 PRD 和架构文档了解项目技术栈，以便正确构造 QA prompt。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 📖 preparing read_file…
+  ┊ 📖 preparing read_file…
+  ┊ 📖 preparing read_file…
+  ┊ 📖 read      /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/prd.md  1.1s
+  ┊ 📖 read      /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/docs/architecture.md  1.2s
+  ┊ 📖 read      /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/STATUS.md  1.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    先更新 STATUS.md 到 QA 验收阶段，然后 spawn QA Agent。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 🔧 preparing patch…
+  ┊ 🔧 patch     /Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/STATUS.md  1.4s
+  ┊ review diff
+a//Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/STATUS.md → b//Users/liyi/work/AI/Hermes/workspace/projects/WEATHER-APP/STATUS.md
+@@ -4,9 +4,9 @@
+ - [x] 架构设计
+ - [x] 架构批准
+ - [x] 任务拆解
+-- [ ] 开发 ← current
+-- [ ] Code Review
+-- [ ] 集成测试
+-- [ ] QA 验收
++- [x] 开发
++- [x] Code Review
++- [x] 集成测试
++- [ ] QA 验收 ← current
+ - [ ] 文档
+ - [ ] 交付
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+    现在构造 QA Agent prompt 并 spawn。项目是 Python + Flask 后端 + 纯前端，QA 需要启动后端服务后测试 API。
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
