@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天气查询</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>天气查询</h1>
+    <section class="search-section" aria-label="搜索">
+      <form id="search-form" role="search">
+        <input
+          type="text"
+          id="city-input"
+          placeholder="请输入城市名称，如：北京"
+          aria-label="城市名称"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="search-btn">搜索</button>
+      </form>
+    </section>
+
+    <section id="result-container" class="result-container" aria-live="polite">
+      <!-- 天气卡片或错误提示动态渲染 -->
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
