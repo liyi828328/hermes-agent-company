@@ -1,94 +1,118 @@
-# WEATHER-APP — 天气查询小工具
+# Weather App — 天气查询 API 服务
 
-一个简洁的天气查询 Web 应用。输入城市名称，即可查看当前温度、天气描述和风向信息。前后端分离架构，后端代理调用和风天气（QWeather）API。
+一个基于 FastAPI 的天气查询后端服务，调用和风天气（QWeather）API 提供城市搜索和实时天气查询功能。API Key 安全地存储在后端，不暴露给前端。
 
 ## 功能
 
-- 输入城市名称查询当前天气
-- 展示温度（℃）、天气描述（如"晴"）、风向（如"东北风"）
-- 响应式布局，手机和电脑均可正常使用
-- 城市不存在时给出友好提示
+- **城市搜索**：输入城市名称（中文或拼音），返回匹配的城市列表
+- **实时天气查询**：根据城市 ID 获取当前天气（温度、天气描述、风向、风力、湿度）
+- **API Key 安全代理**：QWeather API Key 仅存在于后端环境变量中
 
 ## 技术栈
 
-| 层 | 技术 |
-|----|------|
-| 后端 | Python 3 + Flask |
-| 前端 | 原生 HTML + CSS + JavaScript |
-| HTTP 客户端 | requests |
-| 跨域 | flask-cors |
-| 天气数据源 | 和风天气 API（QWeather） |
+| 层 | 技术 | 版本 |
+|----|------|------|
+| 后端框架 | FastAPI | 0.100+ |
+| HTTP 客户端 | httpx | 0.27+ |
+| 配置管理 | pydantic-settings | 2.0+ |
+| 运行时 | Python | 3.10+ |
+| 测试 | pytest + pytest-asyncio | — |
+| 静态检查 | ruff | 0.4+ |
 
-## 目录结构
+## 快速开始
+
+### 1. 克隆项目
+
+```bash
+git clone <仓库地址>
+cd weather-app
+```
+
+### 2. 创建虚拟环境并安装依赖
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 3. 配置环境变量
+
+```bash
+cp .env.example .env
+```
+
+编辑 `.env` 文件，填入你的 QWeather API Key：
 
 ```
-WEATHER-APP/
+QWEATHER_API_KEY=你的API密钥
+QWEATHER_API_HOST=k73wt3h522.re.qweatherapi.com
+```
+
+### 4. 启动服务
+
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+服务启动后访问 http://localhost:8000/docs 可查看自动生成的 OpenAPI 文档。
+
+### 5. 测试接口
+
+```bash
+# 城市搜索
+curl "http://localhost:8000/api/cities?q=北京"
+
+# 实时天气查询（使用城市搜索返回的 ID）
+curl "http://localhost:8000/api/weather?location=101010100"
+```
+
+## 项目结构
+
+```
+weather-app/
 ├── backend/
-│   ├── app.py                  # Flask 主应用
-│   ├── config.py               # 配置管理
-│   ├── weather_service.py      # 和风天气 API 封装
-│   ├── requirements.txt        # Python 依赖
-│   └── tests/                  # 单元测试
-├── frontend/
-│   ├── index.html              # 主页面
-│   ├── style.css               # 样式
-│   └── app.js                  # 前端逻辑
-├── docs/                       # 项目文档
-│   ├── API.md                  # API 文档
-│   ├── DEPLOY.md               # 部署文档
-│   └── USER-GUIDE.md           # 用户指南
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py              # FastAPI 入口，注册路由、CORS、异常处理
+│   │   ├── config.py            # 配置管理（环境变量读取）
+│   │   ├── routers/
+│   │   │   ├── city.py          # 城市搜索路由 GET /api/cities
+│   │   │   └── weather.py       # 天气查询路由 GET /api/weather
+│   │   ├── services/
+│   │   │   └── qweather.py      # QWeather API 调用封装（带超时和重试）
+│   │   └── schemas/
+│   │       ├── city.py          # 城市相关 Pydantic 模型
+│   │       └── weather.py       # 天气相关 Pydantic 模型
+│   ├── tests/                   # 单元测试
+│   ├── requirements.txt
+│   └── .env.example             # 环境变量模板
+├── docs/
+│   ├── prd.md                   # 产品需求文档
+│   ├── architecture.md          # 技术架构文档
+│   ├── API.md                   # API 接口文档
+│   ├── DEPLOY.md                # 部署文档
+│   └── contracts/
+│       ├── api.yaml             # OpenAPI 契约
+│       └── error-codes.md       # 错误码规范
 ├── README.md
-└── CHANGELOG.md
+├── CHANGELOG.md
+└── STATUS.md
 ```
 
-## 快速启动
+## 文档索引
 
-### 前置条件
+| 文档 | 路径 | 说明 |
+|------|------|------|
+| API 接口文档 | [docs/API.md](docs/API.md) | 接口详情、请求/响应示例、错误码 |
+| 部署文档 | [docs/DEPLOY.md](docs/DEPLOY.md) | 环境要求、部署步骤、运维说明 |
+| 产品需求文档 | [docs/prd.md](docs/prd.md) | 功能列表与验收标准 |
+| 技术架构文档 | [docs/architecture.md](docs/architecture.md) | 系统架构与模块设计 |
+| OpenAPI 契约 | [docs/contracts/api.yaml](docs/contracts/api.yaml) | 接口定义（机器可读） |
+| 错误码规范 | [docs/contracts/error-codes.md](docs/contracts/error-codes.md) | 统一错误码列表 |
+| 变更日志 | [CHANGELOG.md](CHANGELOG.md) | 版本变更记录 |
 
-- Python 3.8+
-- pip
+## 许可
 
-### 1. 启动后端
-
-```bash
-cd backend
-pip install -r requirements.txt
-export QWEATHER_API_KEY="a5d3a7d4e32c4c7d880025b161cc9f15"
-python app.py
-```
-
-后端将在 `http://localhost:5000` 启动。
-
-### 2. 打开前端
-
-用浏览器直接打开 `frontend/index.html` 文件即可。
-
-### 3. 使用
-
-在搜索框输入城市名称（如"北京"），点击搜索按钮或按回车键，即可看到天气信息。
-
-## 环境变量
-
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| QWEATHER_API_KEY | 和风天气 API Key | 空（必填） |
-| QWEATHER_GEO_BASE_URL | GeoAPI 地址 | https://geoapi.qweather.com/v2/city/lookup |
-| QWEATHER_WEATHER_BASE_URL | 天气 API 地址 | https://devapi.qweather.com/v7/weather/now |
-| QWEATHER_TIMEOUT | API 调用超时（秒） | 5 |
-| FLASK_DEBUG | 开启 Flask 调试模式 | false |
-
-## 运行测试
-
-```bash
-cd backend
-pip install -r requirements.txt
-pytest --cov=. --cov-report=term-missing
-```
-
-## 相关文档
-
-- [API 文档](docs/API.md)
-- [部署文档](docs/DEPLOY.md)
-- [用户指南](docs/USER-GUIDE.md)
-- [产品需求文档](docs/prd.md)
-- [技术架构文档](docs/architecture.md)
+内部项目，仅限公司内部使用。

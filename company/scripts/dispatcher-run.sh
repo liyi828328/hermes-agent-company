@@ -111,7 +111,7 @@ if [ "$ARCH_STATUS" = "pending_review" ]; then
 fi
 
 # ========== 阶段 3：拆任务 + 开发 ==========
-CODE_DONE=$(find "${PROJECT_PATH}/docs/tasks/" -name "code-*.done" -o -name "task-*.done" -o -name "dev-*.done" 2>/dev/null | head -1)
+CODE_DONE=$(find "${PROJECT_PATH}/docs/tasks/" -name "code-*.done" -o -name "task-*.done" -o -name "dev-*.done" -o -name "T*.done" 2>/dev/null | head -1)
 
 if [ -z "$CODE_DONE" ]; then
     log "阶段 3：拆任务并启动开发"
@@ -120,7 +120,7 @@ if [ -z "$CODE_DONE" ]; then
     # 等待 Coder 完成
     waited=0
     while [ $waited -lt 900 ]; do
-        CODE_DONE=$(find "${PROJECT_PATH}/docs/tasks/" -name "code-*.done" -o -name "task-*.done" -o -name "dev-*.done" 2>/dev/null | head -1)
+        CODE_DONE=$(find "${PROJECT_PATH}/docs/tasks/" -name "code-*.done" -o -name "task-*.done" -o -name "dev-*.done" -o -name "T*.done" 2>/dev/null | head -1)
         if [ -n "$CODE_DONE" ]; then break; fi
         sleep 15
         waited=$((waited + 15))
