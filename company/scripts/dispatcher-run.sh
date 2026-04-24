@@ -92,10 +92,25 @@ fi
 # ========== 阶段 2：等待架构审批 ==========
 ARCH_STATUS=$(grep -i "status:" "$ARCH_FILE" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d ' ')
 
-if [ "$ARCH_STATUS" = "pending_review" ]; then
-    log "阶段 2：架构等待审批，写 alert 通知 PM"
-    if ! grep -q "arch-pending-review-${PROJECT_CODE}" "$ALERT_FILE" 2>/dev/null; then
-        write_alert "arch-pending-review-${PROJECT_CODE}" "Architect" "需要审批" "架构设计已完成，等待老板审批。请查看 docs/architecture.md 并将 status 改为 approved。"
+if [ "$ARCH_STATUS" != "approved" ]; then
+    # rejected 时需要重新走架构设计
+    if [ "$ARCH_STATUS" = "rejected" ]; then
+        log "阶段 2：架构被打回，清理旧信号文件并重新 spawn Architect"
+        rm -f "${PROJECT_PATH}/docs/tasks/arch-001.done"
+        run_dispatcher "架构设计(重做)" "项目 ${PROJECT_CODE} 架构方案被老板打回。项目路径：${PROJECT_PATH}。请读取 architecture.md 中的打回意见，重新 spawn Architect Agent 按意见修改架构方案，等待 Architect 完成后退出。"
+        if ! wait_for_file "${PROJECT_PATH}/docs/tasks/arch-001.done" 600; then
+            log "错误：Architect 重做超时未完成"
+            write_alert "arch-redo-timeout-${PROJECT_CODE}" "Architect" "超时" "架构重做超过 10 分钟未完成"
+            exit 1
+        fi
+        ARCH_STATUS=$(grep -i "status:" "$ARCH_FILE" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d ' ')
+    fi
+
+    if [ "$ARCH_STATUS" = "pending_review" ]; then
+        log "阶段 2：架构等待审批，写 alert 通知 PM"
+        if ! grep -q "arch-pending-review-${PROJECT_CODE}" "$ALERT_FILE" 2>/dev/null; then
+            write_alert "arch-pending-review-${PROJECT_CODE}" "Architect" "需要审批" "架构设计已完成，等待老板审批。请查看 docs/architecture.md 并将 status 改为 approved。"
+        fi
     fi
     
     # 轮询等待 status 变为 approved
@@ -104,6 +119,12 @@ if [ "$ARCH_STATUS" = "pending_review" ]; then
         ARCH_STATUS=$(grep -i "status:" "$ARCH_FILE" 2>/dev/null | head -1 | sed 's/.*status:\s*//' | tr -d ' ')
         if [ "$ARCH_STATUS" = "approved" ]; then
             break
+        fi
+        if [ "$ARCH_STATUS" = "rejected" ]; then
+            log "架构再次被打回，重新 spawn Architect"
+            rm -f "${PROJECT_PATH}/docs/tasks/arch-001.done"
+            run_dispatcher "架构设计(重做)" "项目 ${PROJECT_CODE} 架构方案被老板打回。项目路径：${PROJECT_PATH}。请读取 architecture.md 中的打回意见，重新 spawn Architect Agent 按意见修改架构方案，等待 Architect 完成后退出。"
+            wait_for_file "${PROJECT_PATH}/docs/tasks/arch-001.done" 600
         fi
         sleep 30
     done
